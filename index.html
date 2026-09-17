@@ -6,8 +6,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Электрика и сантехника под ключ — частная бригада в Самаре</title>
-<meta name="description" content="Проектирование и монтаж электрики и сантехники для частных домов, коттеджей, СИП и каркасных домов. Самара и область. Опыт 10+ лет, гарантия 1 год, работа по договору. Выезд и бесплатный расчёт сметы.">
+<meta name="description" content="Проектирование и монтаж электрики и сантехники для частных домов, коттеджей, СИП и каркасных домов. Самара и область. Опыт 10+ лет, гарантия 1 год, работа по договору. Бесплатный расчёт стоимости работ.">
 <meta name="keywords" content="монтаж электрики в частном доме, электрика под ключ, проектирование и монтаж электрики, монтаж сантехники в частном доме, установка котла в частном доме, монтаж тёплого пола, электрика ИЖС, внутренние инженерные сети ИЖС, подключение водонагревателя">
+<link rel="icon" type="image/png" href="assets/brand/logo.png">
 <style>
 /* ============================================================
    DESIGN TOKENS
@@ -135,6 +136,18 @@ section { padding: 72px 0; }
   max-width: 1100px;
   margin: 0 auto;
 }
+.header-logo-link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+}
+.header-logo {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
 .header-brand {
   display: flex;
   flex-direction: column;
@@ -164,6 +177,19 @@ section { padding: 72px 0; }
   align-items: center;
   gap: 14px;
 }
+.header-call-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--accent);
+  color: var(--hero-bg);
+  font-weight: 700;
+  font-size: 0.85rem;
+  padding: 8px 14px;
+  border-radius: var(--r);
+  white-space: nowrap;
+}
+.header-call-btn:hover { background: var(--accent-dk); }
 .header-phone {
   display: flex;
   flex-direction: column;
@@ -866,6 +892,8 @@ section { padding: 72px 0; }
   body { padding-bottom: 80px; }
   #mobile-cta { display: flex; }
   .header-actions .btn { display: none; }
+  .header-call-btn { display: none; }
+  .header-brand .brand-tagline { display: none; }
   .services-grid { grid-template-columns: 1fr; }
   .services-grid .service-card:last-child { grid-column: auto; }
   .process-steps { grid-template-columns: 1fr; }
@@ -887,12 +915,16 @@ section { padding: 72px 0; }
 <!-- HEADER -->
 <header id="site-header">
   <div class="header-inner">
-    <div class="header-brand">
-      <span class="brand-name">ВИМ-ИНЖЕНЕРКА</span>
-      <span class="brand-sub">Частная бригада</span>
-      <span class="brand-tagline">Электрика и сантехника · Самара</span>
-    </div>
+    <a href="#hero" class="header-logo-link">
+      <img src="assets/brand/logo.png" alt="ВИМ-ИНЖЕНЕРКА" class="header-logo">
+      <div class="header-brand">
+        <span class="brand-name">ВИМ-ИНЖЕНЕРКА</span>
+        <span class="brand-sub">Частная бригада</span>
+        <span class="brand-tagline">Электрика и сантехника · Самара</span>
+      </div>
+    </a>
     <div class="header-actions">
+      <a href="tel:+79934660555" class="header-call-btn">📞 +7 993 466-05-55</a>
       <div class="header-phone">
         <!-- Замените на реальный email если изменится -->
         <a href="mailto:i.modelirovanie@yandex.ru">i.modelirovanie@yandex.ru</a>
@@ -922,7 +954,7 @@ section { padding: 72px 0; }
         </div>
       </div>
       <div class="hero-form-card">
-        <div class="form-title">Выезд и бесплатный расчёт сметы</div>
+        <div class="form-title">Бесплатный расчёт стоимости работ</div>
         <div class="form-sub">Опишите объект — рассчитаем стоимость и приедем на осмотр без обязательств</div>
         <!--
           action: сюда позже подставим адрес формы
@@ -1008,7 +1040,7 @@ section { padding: 72px 0; }
           <li>Чеки на все закупленные материалы</li>
         </ul>
         <a href="#final-cta" class="btn btn-primary">Получить расчёт</a>
-        <p class="cta-label">Выезд и расчёт сметы — бесплатно</p>
+        <p class="cta-label">Расчёт стоимости работ — бесплатно</p>
       </div>
     </div>
   </div>
@@ -1218,7 +1250,7 @@ section { padding: 72px 0; }
           Сколько стоит монтаж электрики и сантехники под ключ?
           <span class="faq-icon">+</span>
         </button>
-        <div class="faq-a"><div class="faq-a-inner">Стоимость зависит от площади дома, количества точек, сложности проекта и объёма материалов. Фиксированных прайсов нет — каждый объект индивидуален. Приедем, посмотрим, рассчитаем точную стоимость под ваш дом. Выезд и расчёт сметы — бесплатно.</div></div>
+        <div class="faq-a"><div class="faq-a-inner">Стоимость зависит от площади дома, количества точек, сложности проекта и объёма материалов. Фиксированных прайсов нет — каждый объект индивидуален. Приедем, посмотрим, рассчитаем точную стоимость под ваш дом. Расчёт стоимости — бесплатный.</div></div>
       </div>
       <div class="faq-item">
         <button class="faq-q" aria-expanded="false">
