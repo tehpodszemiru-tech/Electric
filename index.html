@@ -9,6 +9,7 @@
 <meta name="description" content="Проектирование и монтаж электрики и сантехники для частных домов, коттеджей, СИП и каркасных домов. Самара и область. Опыт 10+ лет, гарантия 1 год, работа по договору. Бесплатный расчёт стоимости работ.">
 <meta name="keywords" content="монтаж электрики в частном доме, электрика под ключ, проектирование и монтаж электрики, монтаж сантехники в частном доме, установка котла в частном доме, монтаж тёплого пола, электрика ИЖС, внутренние инженерные сети ИЖС, подключение водонагревателя">
 <link rel="icon" type="image/png" href="assets/brand/logo.png">
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 <style>
 /* ============================================================
    DESIGN TOKENS
@@ -973,6 +974,11 @@ section { padding: 72px 0; }
             <label for="h-comment">Что нужно сделать?</label>
             <textarea id="h-comment" name="comment" placeholder="Например: СИП-дом 120 м², нужна электрика + сантехника с котлом и тёплым полом"></textarea>
           </div>
+          <div style="position:absolute; left:-9999px; top:-9999px;" aria-hidden="true">
+            <label for="h-website">Website</label>
+            <input type="text" id="h-website" name="website" tabindex="-1" autocomplete="off">
+          </div>
+          <div class="cf-turnstile" data-sitekey="0x4AAAAAAE665h3_Qwk-fPE_" style="margin-bottom:14px;"></div>
           <button type="submit" class="btn btn-primary btn-full">Рассчитать стоимость →</button>
           <p class="form-note">Отвечаем в течение часа. Без навязчивых звонков — только по делу.<br>Нажимая кнопку, вы соглашаетесь с <a href="privacy-policy.html" target="_blank" style="color:var(--accent);">политикой конфиденциальности</a>.</p>
         </form>
@@ -1333,6 +1339,11 @@ section { padding: 72px 0; }
             <label for="c-comment">Комментарий</label>
             <textarea id="c-comment" name="comment" placeholder="Площадь, что нужно сделать, регион (если проектирование удалённо)"></textarea>
           </div>
+          <div style="position:absolute; left:-9999px; top:-9999px;" aria-hidden="true">
+            <label for="c-website">Website</label>
+            <input type="text" id="c-website" name="website" tabindex="-1" autocomplete="off">
+          </div>
+          <div class="cf-turnstile" data-sitekey="0x4AAAAAAE665h3_Qwk-fPE_" style="margin-bottom:14px;"></div>
           <button type="submit" class="btn btn-primary btn-full btn-lg">Отправить заявку →</button>
           <p class="form-note" style="text-align:center">Без спама. Отвечаем быстро. Нажимая кнопку, вы соглашаетесь с <a href="privacy-policy.html" target="_blank" style="color:var(--accent);">политикой конфиденциальности</a>.</p>
         </form>
@@ -1430,20 +1441,54 @@ document.querySelectorAll('.faq-q').forEach(btn => {
   });
 });
 
-// Form submit stub (убрать e.preventDefault() когда будет настроен action)
+// Отправка заявки на Cloudflare Worker
+// TODO: заменить на реальный адрес после деплоя (шаг 3)
+const WORKER_ENDPOINT = 'https://electric-leads.PLACEHOLDER.workers.dev';
+
 document.querySelectorAll('form').forEach(form => {
-  form.addEventListener('submit', e => {
-    e.preventDefault(); // убрать после подключения Formspree / Telegram-бота
+  form.addEventListener('submit', async e => {
+    e.preventDefault();
     const btn = form.querySelector('button[type="submit"]');
     const orig = btn.textContent;
-    btn.textContent = '✓ Заявка принята!';
+    const data = new FormData(form);
+    const payload = {
+      name: data.get('name'),
+      phone: data.get('phone'),
+      objectType: data.get('object') || '',
+      message: data.get('comment') || '',
+      website: data.get('website') || '',
+      turnstileToken: data.get('cf-turnstile-response') || '',
+    };
+
     btn.disabled = true;
-    btn.style.background = 'oklch(55% 0.14 150)';
+    btn.textContent = 'Отправляем…';
+
+    try {
+      const res = await fetch(WORKER_ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+      const result = await res.json();
+
+      if (result.ok) {
+        btn.textContent = '✓ Заявка принята!';
+        btn.style.background = 'oklch(55% 0.14 150)';
+        form.reset();
+        if (window.turnstile) window.turnstile.reset();
+      } else {
+        btn.textContent = 'Ошибка, попробуйте ещё раз';
+        btn.style.background = 'oklch(55% 0.18 25)';
+      }
+    } catch (err) {
+      btn.textContent = 'Ошибка сети — позвоните нам';
+      btn.style.background = 'oklch(55% 0.18 25)';
+    }
+
     setTimeout(() => {
       btn.textContent = orig;
       btn.disabled = false;
       btn.style.background = '';
-      form.reset();
     }, 3500);
   });
 });
