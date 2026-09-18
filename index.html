@@ -330,6 +330,24 @@ section { padding: 72px 0; }
   margin-top: 10px;
   line-height: 1.5;
 }
+.consent-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  margin: 4px 0 14px;
+}
+.consent-row input[type="checkbox"] {
+  margin-top: 3px;
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  accent-color: var(--accent);
+}
+.consent-row label {
+  font-size: 0.78rem;
+  color: var(--muted);
+  line-height: 1.5;
+}
 
 /* ============================================================
    STATS BAR
@@ -894,6 +912,7 @@ section { padding: 72px 0; }
   #mobile-cta { display: flex; }
   .header-actions .btn { display: none; }
   .header-call-btn { display: none; }
+  .header-phone { display: none; }
   .header-brand .brand-tagline { display: none; }
   .services-grid { grid-template-columns: 1fr; }
   .services-grid .service-card:last-child { grid-column: auto; }
@@ -956,7 +975,7 @@ section { padding: 72px 0; }
       </div>
       <div class="hero-form-card">
         <div class="form-title">Бесплатный расчёт стоимости работ</div>
-        <div class="form-sub">Опишите объект — рассчитаем стоимость и приедем на осмотр без обязательств</div>
+        <div class="form-sub">Опишите объект — рассчитаем стоимость</div>
         <!--
           action: сюда позже подставим адрес формы
           (Formspree / Telegram-бот / другой сервис приёма заявок на почту)
@@ -978,9 +997,13 @@ section { padding: 72px 0; }
             <label for="h-website">Website</label>
             <input type="text" id="h-website" name="website" tabindex="-1" autocomplete="off">
           </div>
+          <div class="consent-row">
+            <input type="checkbox" id="h-consent" name="consent" required>
+            <label for="h-consent">Согласен(на) на обработку персональных данных в соответствии с <a href="privacy-policy.html" target="_blank" style="color:var(--accent);">политикой конфиденциальности</a></label>
+          </div>
           <div class="cf-turnstile" data-sitekey="0x4AAAAAAE665h3_Qwk-fPE_" style="margin-bottom:14px;"></div>
           <button type="submit" class="btn btn-primary btn-full">Рассчитать стоимость →</button>
-          <p class="form-note">Отвечаем в течение часа. Без навязчивых звонков — только по делу.<br>Нажимая кнопку, вы соглашаетесь с <a href="privacy-policy.html" target="_blank" style="color:var(--accent);">политикой конфиденциальности</a>.</p>
+          <p class="form-note">Отвечаем в течение часа. Без навязчивых звонков — только по делу.</p>
         </form>
       </div>
     </div>
@@ -1343,9 +1366,13 @@ section { padding: 72px 0; }
             <label for="c-website">Website</label>
             <input type="text" id="c-website" name="website" tabindex="-1" autocomplete="off">
           </div>
+          <div class="consent-row">
+            <input type="checkbox" id="c-consent" name="consent" required>
+            <label for="c-consent">Согласен(на) на обработку персональных данных в соответствии с <a href="privacy-policy.html" target="_blank" style="color:var(--accent);">политикой конфиденциальности</a></label>
+          </div>
           <div class="cf-turnstile" data-sitekey="0x4AAAAAAE665h3_Qwk-fPE_" style="margin-bottom:14px;"></div>
           <button type="submit" class="btn btn-primary btn-full btn-lg">Отправить заявку →</button>
-          <p class="form-note" style="text-align:center">Без спама. Отвечаем быстро. Нажимая кнопку, вы соглашаетесь с <a href="privacy-policy.html" target="_blank" style="color:var(--accent);">политикой конфиденциальности</a>.</p>
+          <p class="form-note" style="text-align:center">Без спама. Отвечаем быстро.</p>
         </form>
       </div>
       <div class="cta-contacts">
