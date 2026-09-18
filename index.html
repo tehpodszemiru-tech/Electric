@@ -1606,9 +1606,8 @@ document.querySelectorAll('.faq-q').forEach(btn => {
   });
 });
 
-// Отправка заявки на Cloudflare Worker
-// TODO: заменить на реальный адрес после деплоя (шаг 3)
-const WORKER_ENDPOINT = 'https://electric-leads.electric-leads.workers.dev';
+// Отправка заявки на бэкенд (Beget, РФ — соответствие 152-ФЗ по локализации данных)
+const WORKER_ENDPOINT = 'https://leads.vim-scrum.ru/lead';
 
 document.querySelectorAll('form').forEach(form => {
   form.addEventListener('submit', async e => {
