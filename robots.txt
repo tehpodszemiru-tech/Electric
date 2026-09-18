@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://electric.vim-scrum.ru/sitemap.xml
