@@ -186,9 +186,7 @@ section { padding: 72px 0; }
   flex-shrink: 0;
 }
 .header-nav {
-  display: flex;
-  align-items: center;
-  gap: 20px;
+  display: none;
 }
 .header-nav a {
   font-size: 0.85rem;
@@ -199,7 +197,7 @@ section { padding: 72px 0; }
 }
 .header-nav a:hover { color: var(--accent); }
 .menu-toggle {
-  display: none;
+  display: flex;
   width: 36px;
   height: 36px;
   flex-direction: column;
@@ -291,14 +289,13 @@ section { padding: 72px 0; }
   flex-direction: column;
   align-items: flex-end;
   gap: 1px;
-}
-.header-phone a {
   font-size: 1.05rem;
   font-weight: 700;
   color: var(--surface);
   letter-spacing: -0.01em;
+  text-decoration: none;
 }
-.header-phone a:hover { color: var(--accent); }
+.header-phone:hover { color: var(--accent); }
 .header-phone span {
   font-size: 0.68rem;
   color: oklch(100% 0 0 / 0.45);
@@ -1005,8 +1002,6 @@ section { padding: 72px 0; }
 @media (max-width: 1024px) {
   .services-grid { grid-template-columns: 1fr 1fr; }
   .services-grid .service-card:last-child { grid-column: span 2; }
-  .header-nav { display: none; }
-  .menu-toggle { display: flex; }
 }
 @media (max-width: 820px) {
   section { padding: 52px 0; }
@@ -1066,11 +1061,10 @@ section { padding: 72px 0; }
     </div>
     <div class="header-actions">
       <a href="tel:+79934660555" class="header-call-btn"><svg class="icon-phone" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.62 10.79a15.05 15.05 0 0 0 6.59 6.59l2.2-2.2a1 1 0 0 1 1.01-.24c1.12.37 2.33.57 3.58.57a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1C10.4 21 3 13.6 3 4.5a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.46.57 3.58a1 1 0 0 1-.25 1.01l-2.2 2.2Z"/></svg> +7 993 466-05-55</a>
-      <div class="header-phone">
-        <!-- Замените на реальный email если изменится -->
-        <a href="mailto:i.modelirovanie@yandex.ru">i.modelirovanie@yandex.ru</a>
+      <a class="header-phone" href="mailto:i.modelirovanie@yandex.ru">
+        i.modelirovanie@yandex.ru
         <span>Написать на почту</span>
-      </div>
+      </a>
       <button class="menu-toggle" id="menu-toggle" aria-label="Открыть меню" aria-expanded="false">
         <span></span><span></span><span></span>
       </button>
