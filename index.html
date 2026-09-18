@@ -1284,10 +1284,7 @@ section { padding: 72px 0; }
     </div>
 
     <div class="tab-panel active" id="tab-elektrika">
-      <div class="gallery-grid" id="grid-elektrika">
-        <div class="gallery-item"><div class="ph"><span class="ph-icon">📷</span><span>Розетки и выключатели<br><em>— фото скоро</em></span></div></div>
-        <div class="gallery-item"><div class="ph"><span class="ph-icon">📷</span><span>Монтаж в каркасном доме<br><em>— фото скоро</em></span></div></div>
-      </div>
+      <div class="gallery-grid" id="grid-elektrika"></div>
     </div>
 
     <div class="tab-panel" id="tab-3d">
@@ -1295,10 +1292,7 @@ section { padding: 72px 0; }
         <strong>Перед монтажом электрики мы создаём 3D-визуализацию в SketchUp:</strong> расположение каждой розетки,
         выключателя и щитка с точными размерами. Вы видите и согласовываете будущую электрику до начала работ.
       </p>
-      <div class="gallery-grid-3d" id="grid-proektirovanie">
-        <div class="gallery-item-3d"><div class="ph"><span class="ph-icon">🖥</span><span>3D-рендер другого объекта<br><em>— добавим скоро</em></span></div></div>
-        <div class="gallery-item-3d"><div class="ph"><span class="ph-icon">🖥</span><span>3D-проект для СИП-дома<br><em>— добавим скоро</em></span></div></div>
-      </div>
+      <div class="gallery-grid-3d" id="grid-proektirovanie"></div>
     </div>
 
     <div class="tab-panel" id="tab-santehnika">
@@ -1545,31 +1539,34 @@ document.querySelectorAll('.tab-btn').forEach(btn => {
     if (!res.ok) return;
     const data = await res.json();
     const grids = {
-      elektrika: { id: 'grid-elektrika', itemClass: 'gallery-item' },
-      proektirovanie: { id: 'grid-proektirovanie', itemClass: 'gallery-item-3d' },
-      santehnika: { id: 'grid-santehnika', itemClass: 'gallery-item' },
+      elektrika: { id: 'grid-elektrika', itemClass: 'gallery-item', phIcon: '📷', phNote: 'фото скоро' },
+      proektirovanie: { id: 'grid-proektirovanie', itemClass: 'gallery-item-3d', phIcon: '🖥', phNote: 'добавим скоро' },
+      santehnika: { id: 'grid-santehnika', itemClass: 'gallery-item', phIcon: '📷', phNote: 'фото скоро' },
     };
     Object.entries(grids).forEach(([cat, cfg]) => {
       const items = data[cat] || [];
       const grid = document.getElementById(cfg.id);
       if (!grid || !items.length) return;
-      // Вставляем в начало сетки, в том же порядке, что в админке,
-      // а плейсхолдеры "фото скоро" остаются в конце.
-      items.slice().reverse().forEach(it => {
+      items.forEach(it => {
         const div = document.createElement('div');
         div.className = cfg.itemClass;
-        const img = document.createElement('img');
-        img.src = 'https://leads.vim-scrum.ru/' + it.file;
-        img.alt = it.caption || '';
-        img.loading = 'lazy';
-        div.appendChild(img);
-        if (it.caption) {
-          const cap = document.createElement('div');
-          cap.className = 'gallery-label';
-          cap.textContent = it.caption;
-          div.appendChild(cap);
+        if (it.file) {
+          const img = document.createElement('img');
+          img.src = 'https://leads.vim-scrum.ru/' + it.file;
+          img.alt = it.caption || '';
+          img.loading = 'lazy';
+          div.appendChild(img);
+          if (it.caption) {
+            const cap = document.createElement('div');
+            cap.className = 'gallery-label';
+            cap.textContent = it.caption;
+            div.appendChild(cap);
+          }
+        } else {
+          div.innerHTML = '<div class="ph"><span class="ph-icon">' + cfg.phIcon + '</span>' +
+            '<span>' + (it.caption || '') + '<br><em>— ' + cfg.phNote + '</em></span></div>';
         }
-        grid.insertBefore(div, grid.firstChild);
+        grid.appendChild(div);
       });
     });
   } catch (e) {
