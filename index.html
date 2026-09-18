@@ -172,12 +172,72 @@ section { padding: 72px 0; }
   max-width: 1100px;
   margin: 0 auto;
 }
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  min-width: 0;
+}
 .header-logo-link {
   display: flex;
   align-items: center;
   gap: 10px;
   text-decoration: none;
+  flex-shrink: 0;
 }
+.header-nav {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.header-nav a {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: oklch(100% 0 0 / 0.72);
+  white-space: nowrap;
+  transition: color 0.15s;
+}
+.header-nav a:hover { color: var(--accent); }
+.menu-toggle {
+  display: none;
+  width: 36px;
+  height: 36px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+.menu-toggle span {
+  display: block;
+  width: 20px;
+  height: 2px;
+  background: var(--surface);
+  border-radius: 2px;
+  transition: transform 0.2s, opacity 0.2s;
+}
+.menu-toggle.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.menu-toggle.open span:nth-child(2) { opacity: 0; }
+.menu-toggle.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+.mobile-nav-panel {
+  display: none;
+  flex-direction: column;
+  background: var(--hero-bg);
+  border-top: 1px solid oklch(100% 0 0 / 0.08);
+  padding: 6px 20px 14px;
+}
+.mobile-nav-panel.open { display: flex; }
+.mobile-nav-panel a {
+  padding: 13px 0;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--surface);
+  border-bottom: 1px solid oklch(100% 0 0 / 0.08);
+}
+.mobile-nav-panel a:last-child { border-bottom: none; color: var(--accent); }
 .header-logo {
   width: 36px;
   height: 36px;
@@ -579,6 +639,21 @@ section { padding: 72px 0; }
   color: var(--fg);
   box-shadow: 0 1px 4px oklch(14% 0.03 245 / 0.1);
 }
+.tab-btn::before {
+  content: '';
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin-right: 7px;
+  vertical-align: middle;
+}
+.tab-btn[data-tab="elektrika"]::before { background: oklch(71% 0.190 78); }
+.tab-btn[data-tab="3d"]::before { background: oklch(58% 0.16 265); }
+.tab-btn[data-tab="santehnika"]::before { background: oklch(62% 0.13 220); }
+.tab-btn[data-tab="elektrika"].active { background: oklch(96% 0.03 78); color: oklch(42% 0.13 60); }
+.tab-btn[data-tab="3d"].active { background: oklch(95% 0.025 265); color: oklch(42% 0.14 265); }
+.tab-btn[data-tab="santehnika"].active { background: oklch(95% 0.025 220); color: oklch(42% 0.12 220); }
 .tab-panel { display: none; }
 .tab-panel.active { display: block; }
 .gallery-grid {
@@ -930,6 +1005,8 @@ section { padding: 72px 0; }
 @media (max-width: 1024px) {
   .services-grid { grid-template-columns: 1fr 1fr; }
   .services-grid .service-card:last-child { grid-column: span 2; }
+  .header-nav { display: none; }
+  .menu-toggle { display: flex; }
 }
 @media (max-width: 820px) {
   section { padding: 52px 0; }
@@ -970,14 +1047,23 @@ section { padding: 72px 0; }
 <!-- HEADER -->
 <header id="site-header">
   <div class="header-inner">
-    <a href="#hero" class="header-logo-link">
-      <img src="assets/brand/logo.png" alt="ВИМ-ИНЖЕНЕРКА" class="header-logo">
-      <div class="header-brand">
-        <span class="brand-name">ВИМ-ИНЖЕНЕРКА</span>
-        <span class="brand-sub">Частная бригада</span>
-        <span class="brand-tagline">Электрика и сантехника · Самара</span>
-      </div>
-    </a>
+    <div class="header-left">
+      <a href="#hero" class="header-logo-link">
+        <img src="assets/brand/logo.png" alt="ВИМ-ИНЖЕНЕРКА" class="header-logo">
+        <div class="header-brand">
+          <span class="brand-name">ВИМ-ИНЖЕНЕРКА</span>
+          <span class="brand-sub">Частная бригада</span>
+          <span class="brand-tagline">Электрика и сантехника · Самара</span>
+        </div>
+      </a>
+      <nav class="header-nav">
+        <a href="#services">Услуги</a>
+        <a href="#process">Как работаем</a>
+        <a href="#portfolio">Портфолио</a>
+        <a href="#geography">География</a>
+        <a href="#faq">FAQ</a>
+      </nav>
+    </div>
     <div class="header-actions">
       <a href="tel:+79934660555" class="header-call-btn"><svg class="icon-phone" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.62 10.79a15.05 15.05 0 0 0 6.59 6.59l2.2-2.2a1 1 0 0 1 1.01-.24c1.12.37 2.33.57 3.58.57a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1C10.4 21 3 13.6 3 4.5a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.46.57 3.58a1 1 0 0 1-.25 1.01l-2.2 2.2Z"/></svg> +7 993 466-05-55</a>
       <div class="header-phone">
@@ -985,8 +1071,19 @@ section { padding: 72px 0; }
         <a href="mailto:i.modelirovanie@yandex.ru">i.modelirovanie@yandex.ru</a>
         <span>Написать на почту</span>
       </div>
+      <button class="menu-toggle" id="menu-toggle" aria-label="Открыть меню" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
     </div>
   </div>
+  <nav class="mobile-nav-panel" id="mobile-nav-panel">
+    <a href="#services">Услуги</a>
+    <a href="#process">Как работаем</a>
+    <a href="#portfolio">Портфолио</a>
+    <a href="#geography">География</a>
+    <a href="#faq">FAQ</a>
+    <a href="tel:+79934660555">📞 +7 993 466-05-55</a>
+  </nav>
 </header>
 
 <!-- HERO -->
@@ -1151,11 +1248,6 @@ section { padding: 72px 0; }
       <h2 class="h2">Наши отличия и гарантии</h2>
     </div>
     <div class="adv-grid">
-      <div class="adv-card highlight">
-        <div class="adv-icon">🖥</div>
-        <h3 class="h3">3D-визуализация электрики</h3>
-        <p>Перед монтажом делаем 3D-модель в SketchUp: расположение каждой розетки, выключателя и щитка с точными размерами. Видите будущую электрику до начала работ и вносите правки без лишних затрат.</p>
-      </div>
       <div class="adv-card">
         <div class="adv-icon">📋</div>
         <h3 class="h3">Работа по договору</h3>
@@ -1167,8 +1259,13 @@ section { padding: 72px 0; }
         <p>Даём письменную гарантию на все выполненные работы сроком 1 год. Все работы соответствуют действующим нормам: электрика — по ПУЭ и ГОСТ.</p>
       </div>
       <div class="adv-card">
+        <div class="adv-icon">📐</div>
+        <h3 class="h3">Проектирование удалённо</h3>
+        <p>Разрабатываем проекты электрики и сантехники для заказчиков из любого региона России — дистанционно, по планам и фото объекта.</p>
+      </div>
+      <div class="adv-card">
         <div class="adv-icon">💰</div>
-        <h3 class="h3">Бюджет ±10%</h3>
+        <h3 class="h3">Отклонение от бюджета ±10%</h3>
         <p>Фиксируем смету до начала работ и соблюдаем её. Отклонение от согласованного бюджета — не более 10%. Никаких скрытых доплат в конце.</p>
       </div>
       <div class="adv-card">
@@ -1177,9 +1274,9 @@ section { padding: 72px 0; }
         <p>Работаем со СИП-домами, каркасными домами, ГКЛ-перегородками. Знаем нюансы прокладки кабеля и труб в этих конструкциях — без лишних согласований и переделок.</p>
       </div>
       <div class="adv-card">
-        <div class="adv-icon">📐</div>
-        <h3 class="h3">Проектирование удалённо</h3>
-        <p>Разрабатываем проекты электрики и сантехники для заказчиков из любого региона России — дистанционно, по планам и фото объекта.</p>
+        <div class="adv-icon">🖥</div>
+        <h3 class="h3">3D-визуализация электрики</h3>
+        <p>Перед монтажом делаем 3D-модель в SketchUp: расположение каждой розетки, выключателя и щитка с точными размерами. Видите будущую электрику до начала работ и вносите правки без лишних затрат.</p>
       </div>
     </div>
   </div>
@@ -1491,6 +1588,22 @@ document.querySelectorAll('.tab-btn').forEach(btn => {
     document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
     btn.classList.add('active');
     document.getElementById('tab-' + tab).classList.add('active');
+  });
+});
+
+// Мобильное меню (бургер)
+const menuToggle = document.getElementById('menu-toggle');
+const mobileNavPanel = document.getElementById('mobile-nav-panel');
+menuToggle.addEventListener('click', () => {
+  const isOpen = mobileNavPanel.classList.toggle('open');
+  menuToggle.classList.toggle('open', isOpen);
+  menuToggle.setAttribute('aria-expanded', isOpen);
+});
+mobileNavPanel.querySelectorAll('a').forEach(link => {
+  link.addEventListener('click', () => {
+    mobileNavPanel.classList.remove('open');
+    menuToggle.classList.remove('open');
+    menuToggle.setAttribute('aria-expanded', 'false');
   });
 });
 
