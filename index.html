@@ -115,11 +115,33 @@ section { padding: 72px 0; }
   text-decoration: none;
 }
 .btn-primary {
+  position: relative;
+  overflow: hidden;
   background: var(--accent);
   color: var(--fg);
   box-shadow: var(--shadow-btn);
 }
 .btn-primary:hover { background: var(--accent-dk); transform: translateY(-1px); box-shadow: 0 6px 24px oklch(71% 0.19 78 / 0.45); }
+.btn-primary::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -75%;
+  width: 45%;
+  height: 100%;
+  background: linear-gradient(120deg, transparent, oklch(100% 0 0 / 0.4), transparent);
+  transform: skewX(-20deg);
+  animation: btn-shimmer 4s ease-in-out infinite;
+  pointer-events: none;
+}
+@keyframes btn-shimmer {
+  0%   { left: -75%; }
+  18%  { left: 125%; }
+  100% { left: 125%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .btn-primary::after { animation: none; display: none; }
+}
 .btn-outline {
   background: transparent;
   color: var(--surface);
