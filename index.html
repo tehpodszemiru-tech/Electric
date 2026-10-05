@@ -37,6 +37,74 @@
 <meta name="twitter:description" content="Проектирование и монтаж электрики и сантехники для частных домов, коттеджей, СИП и каркасных домов.">
 <meta name="twitter:image" content="https://electric.vim-scrum.ru/assets/brand/og-banner.jpg">
 <link rel="canonical" href="https://electric.vim-scrum.ru/">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#00243d">
+<meta property="og:site_name" content="ВИМ-ИНЖЕНЕРКА">
+<meta property="og:locale" content="ru_RU">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Сколько стоит монтаж электрики и сантехники под ключ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Стоимость зависит от площади дома, количества точек, сложности проекта и объёма материалов. Фиксированных прайсов нет — каждый объект индивидуален. Приедем, посмотрим, рассчитаем точную стоимость под ваш дом. Расчёт стоимости — бесплатный."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Сколько времени занимает монтаж?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Сроки зависят от площади объекта и объёма работ. Дом 100–150 м² «под ключ» (электрика + сантехника) — в среднем 10–20 рабочих дней. Точные сроки фиксируем в договоре до начала работ."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Что если у меня ещё нет проекта?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Не проблема. Проектирование — одна из наших услуг. Разработаем схему проводки, расчёт нагрузок и 3D-визуализацию для электрики, схему разводки труб для сантехники. Всё согласовывается с заказчиком до начала монтажа. Можно заказать проект отдельно — в том числе удалённо."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Работаете ли с СИП-домами и каркасными домами?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Да, это наш основной профиль. Знаем особенности прокладки кабеля и труб в СИП-панелях, каркасных конструкциях и ГКЛ-перегородках. Делали множество таких объектов — без переделок и неожиданных проблем."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Устанавливаете ли котлы и тёплый пол?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Да. Выполняем полный комплекс сантехнических работ: монтаж и подключение котлов (газовых и электрических), установка водонагревателей (бойлеров), монтаж тёплого пола (коллекторная группа, контуры укладки, подключение). После монтажа — пуско-наладка и проверка на протечки."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Есть ли гарантия на работы?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Да. Даём письменную гарантию на все выполненные работы — 1 год. Работаем по договору: договор, расписка, акт выполненных работ. Если что-то пошло не так — приедем и устраним за наш счёт."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Что такое 3D-визуализация электрики и зачем она нужна?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Перед монтажом мы создаём 3D-модель комнат в SketchUp с точным расположением каждой розетки, выключателя и щитка — с размерами в миллиметрах. Вы видите, как будет выглядеть электрика, и можете попросить изменить любую точку до начала работ. Это включено в стоимость проектирования."
+      }
+    }
+  ]
+}
+</script>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -45,6 +113,7 @@
   "description": "Проектирование и монтаж электрики и сантехники для частных домов, коттеджей, СИП и каркасных домов в Самаре и Самарской области.",
   "url": "https://electric.vim-scrum.ru/",
   "image": "https://electric.vim-scrum.ru/assets/brand/og-banner.jpg",
+  "logo": "https://electric.vim-scrum.ru/assets/brand/icon-192.png",
   "telephone": "+79934660555",
   "email": "i.modelirovanie@yandex.ru",
   "priceRange": "$$",
@@ -1612,7 +1681,7 @@ document.querySelectorAll('.tab-btn').forEach(btn => {
         if (it.file) {
           const img = document.createElement('img');
           img.src = 'https://leads.vim-scrum.ru/' + it.file;
-          img.alt = it.caption || '';
+          img.alt = it.caption || ({elektrika:'Монтаж электрики в частном доме',proektirovanie:'3D-проект электрики в SketchUp',santehnika:'Монтаж сантехники в частном доме'}[cat]);
           img.loading = 'lazy';
           div.appendChild(img);
           if (it.caption) {
