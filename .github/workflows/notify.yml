@@ -1,0 +1,41 @@
+name: Уведомления владельцу блога
+
+on:
+  pull_request:
+    types: [opened, reopened]
+  schedule:
+    - cron: "0 7 * * 1,4"   # понедельник и четверг, 11:00 по Самаре
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pull-requests: read
+
+jobs:
+  new-article:
+    if: github.event_name == 'pull_request' && startsWith(github.head_ref, 'blog/')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Сообщить о новой статье
+        env:
+          MODE: pr_opened
+          PR_TITLE: ${{ github.event.pull_request.title }}
+          PR_URL: ${{ github.event.pull_request.html_url }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_OWNER_CHAT_ID: ${{ secrets.TELEGRAM_OWNER_CHAT_ID }}
+        run: python3 tools/notify_owner.py
+
+  health:
+    if: github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Проверка состояния блога
+        env:
+          MODE: health
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_OWNER_CHAT_ID: ${{ secrets.TELEGRAM_OWNER_CHAT_ID }}
+        run: python3 tools/notify_owner.py
