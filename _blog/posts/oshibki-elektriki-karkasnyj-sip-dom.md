@@ -3,6 +3,8 @@ title: Электрика в каркасном и СИП-доме: 7 ошибо
 description: Какие ошибки в электрике каркасного и СИП-дома дороже всего исправлять после обшивки: заземление, проводка в стене, щиток, сечения. Разбор мастера.
 date: 2026-10-12
 image: /assets/photos/provodka-potolok.jpg
+cover: provodka-potolok.jpg
+focus: 0.35
 category: Каркасные дома
 draft: false
 ---

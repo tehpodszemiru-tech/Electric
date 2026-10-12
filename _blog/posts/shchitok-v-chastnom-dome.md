@@ -3,6 +3,8 @@ title: Щиток в частном доме: сколько автоматов 
 description: Как собрать щиток в частном доме: сколько автоматов и УЗО нужно, как разбить дом на группы, сколько оставить запаса и что проверить перед сдачей.
 date: 2026-10-12
 image: /assets/photos/provodka-potolok.jpg
+cover: shchitok-avtomaty.jpg
+focus: 0.42
 category: Электрика
 draft: false
 ---

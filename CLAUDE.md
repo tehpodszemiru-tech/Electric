@@ -87,6 +87,8 @@ proektirovanie, santehnika); список фото хранится в
 - Сборка: `python tools/build_blog.py` → `blog/<slug>/index.html`, `blog/index.html`,
   `blog/rss.xml`, `sitemap.xml`. Сгенерированный HTML **коммитится** (Pages деплоит ветку как есть).
   Стили — `assets/blog.css` (токены те же, что в `index.html`).
+- Обложки: у поста поля `cover` (файл из `assets/photos/`) и `focus`; `python tools/make_covers.py` режет
+  горизонтальную обложку `assets/covers/<slug>.jpg` (нужен Pillow), `build_blog.py` её подхватывает. Обложки не повторять.
 - Агент-автор: `_blog/agent/PERSONA.md` (промпт мастера и правила честности),
   `FACTS.md` (реальные случаи/цены — заполняет владелец), `TOPICS.md` (контент-план).
 - Анонсы в соцсети: `_blog/announce/<slug>.json` → при пуше в `main` срабатывает

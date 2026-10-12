@@ -141,6 +141,8 @@ def parse_post(path: Path):
     meta["date_obj"] = datetime.strptime(meta["date"], "%Y-%m-%d")
     meta.setdefault("category", "Электрика")
     meta["image"] = meta.get("image") or "/assets/brand/og-banner.jpg"
+    if (ROOT / "assets" / "covers" / f"{path.stem}.jpg").exists():  # обложка из tools/make_covers.py
+        meta["image"] = f"/assets/covers/{path.stem}.jpg"
     words = len(re.findall(r"\w+", meta["body_md"]))
     meta["minutes"] = max(1, round(words / 180))
     return meta
