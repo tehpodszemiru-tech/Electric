@@ -1229,7 +1229,7 @@ section { padding: 72px 0; }
           action: сюда позже подставим адрес формы
           (Formspree / Telegram-бот / другой сервис приёма заявок на почту)
         -->
-        <form action="" method="POST" name="hero-form">
+        <form action="" method="POST" name="hero-form" class="ym-disable-keys ym-hide-content">
           <div class="field">
             <label for="h-name">Ваше имя</label>
             <input type="text" id="h-name" name="name" placeholder="Алексей" required>
@@ -1544,7 +1544,7 @@ section { padding: 72px 0; }
           action: сюда позже подставим адрес формы
           (Formspree / Telegram-бот / другой сервис приёма заявок на почту)
         -->
-        <form action="" method="POST" name="cta-form">
+        <form action="" method="POST" name="cta-form" class="ym-disable-keys ym-hide-content">
           <div class="field">
             <label for="c-name">Ваше имя</label>
             <input type="text" id="c-name" name="name" placeholder="Алексей" required>
@@ -1691,8 +1691,18 @@ document.querySelectorAll('.tab-btn').forEach(btn => {
             div.appendChild(cap);
           }
         } else {
-          div.innerHTML = '<div class="ph"><span class="ph-icon">' + cfg.phIcon + '</span>' +
-            '<span>' + (it.caption || '') + '<br><em>— ' + cfg.phNote + '</em></span></div>';
+          const ph = document.createElement('div');
+          ph.className = 'ph';
+          const icon = document.createElement('span');
+          icon.className = 'ph-icon';
+          icon.textContent = cfg.phIcon;
+          const txt = document.createElement('span');
+          txt.append(it.caption || '', document.createElement('br'));
+          const em = document.createElement('em');
+          em.textContent = '— ' + cfg.phNote;
+          txt.appendChild(em);
+          ph.append(icon, txt);
+          div.appendChild(ph);
         }
         grid.appendChild(div);
       });
