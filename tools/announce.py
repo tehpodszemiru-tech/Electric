@@ -60,22 +60,31 @@ def tg(text, link):
     return "ok"
 
 
+def _vk_api(method, params, token):
+    params = dict(params, access_token=token, v="5.199")
+    _, raw = http(f"https://api.vk.com/method/{method}", urllib.parse.urlencode(params).encode())
+    res = json.loads(raw)
+    if "error" in res:
+        raise RuntimeError(f"VK {method}: {res['error'].get('error_msg')}")
+    return res["response"]
+
+
 def vk(text, link):
     token, gid = os.environ.get("VK_GROUP_TOKEN"), os.environ.get("VK_GROUP_ID")
     if not (token and gid):
         return "skip"
-    msg = f"{text}\n\nЧитать полностью: {link}"
+    gid = gid.lstrip("-")
+    msg = f"{text}" + chr(10) * 2 + f"Читать полностью: {link}"
     if DRY:
         print("[VK]", msg)
         return "dry"
-    data = urllib.parse.urlencode({
-        "owner_id": f"-{gid.lstrip('-')}", "from_group": 1, "message": msg,
-        "attachments": link, "access_token": token, "v": "5.199",
-    }).encode()
-    _, raw = http("https://api.vk.com/method/wall.post", data)
-    res = json.loads(raw)
-    if "error" in res:
-        raise RuntimeError(f"VK: {res['error'].get('error_msg')}")
+    base = {"owner_id": f"-{gid}", "from_group": 1, "message": msg}
+    try:
+        # карточка-превью статьи (берётся из og:image страницы; нужна горизонтальная картинка)
+        _vk_api("wall.post", dict(base, attachments=link), token)
+    except RuntimeError as e:
+        print(f"VK: карточка не прошла ({e}), публикую текстом со ссылкой", file=sys.stderr)
+        _vk_api("wall.post", base, token)
     return "ok"
 
 
