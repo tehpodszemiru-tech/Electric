@@ -77,3 +77,22 @@ proektirovanie, santehnika); список фото хранится в
 основной (статической) галереей каждого раздела — если фото нет, блок
 скрыт. Статические фото в `assets/photos/`, прописанные прямо в HTML, эта
 система не трогает и не заменяет.
+
+## Блог (/blog/)
+
+Статический блог, собирается скриптом, **бэкенда нет**.
+
+- Источники: `_blog/posts/<slug>.md` (frontmatter: title, description, date, image, category, draft).
+  Папки с `_` GitHub Pages не публикует — там же лежат промпты агента и черновики.
+- Сборка: `python tools/build_blog.py` → `blog/<slug>/index.html`, `blog/index.html`,
+  `blog/rss.xml`, `sitemap.xml`. Сгенерированный HTML **коммитится** (Pages деплоит ветку как есть).
+  Стили — `assets/blog.css` (токены те же, что в `index.html`).
+- Агент-автор: `_blog/agent/PERSONA.md` (промпт мастера и правила честности),
+  `FACTS.md` (реальные случаи/цены — заполняет владелец), `TOPICS.md` (контент-план).
+- Анонсы в соцсети: `_blog/announce/<slug>.json` → при пуше в `main` срабатывает
+  `.github/workflows/announce.yml` → `tools/announce.py` постит в Telegram и VK
+  (секреты только в GitHub Actions secrets: TELEGRAM_BOT_TOKEN, TELEGRAM_CHANNEL_ID,
+  VK_GROUP_TOKEN, VK_GROUP_ID). Учёт отправленного — `_blog/announce/posted.json`.
+- Статьи пишет облачная рутина Claude раз в неделю и открывает **pull request**;
+  владелец проверяет и сливает → публикация. Без слияния ничего не выходит.
+- Правила контента из раздела выше действуют и для блога (нет «бесплатного выезда», контакты не менять).
