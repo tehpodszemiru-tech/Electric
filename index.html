@@ -313,6 +313,13 @@ section { padding: 72px 0; }
 .header-nav {
   display: none;
 }
+@media (min-width: 1024px) {
+  .header-nav { display: flex; align-items: center; gap: 22px; }
+  .header-nav .nav-secondary { display: none; }
+}
+.header-nav a.nav-blog { color: var(--accent); }
+.header-nav a.nav-blog:hover { color: var(--accent-lt); }
+section[id], footer[id] { scroll-margin-top: 72px; }
 .header-nav a {
   font-size: 0.85rem;
   font-weight: 600;
@@ -1175,13 +1182,13 @@ section { padding: 72px 0; }
           <span class="brand-tagline">Электрика и сантехника · Самара</span>
         </div>
       </a>
-      <nav class="header-nav">
+      <nav class="header-nav" aria-label="Основное меню">
         <a href="#services">Услуги</a>
-        <a href="#process">Как работаем</a>
+        <a href="#process" class="nav-secondary">Как работаем</a>
         <a href="#portfolio">Портфолио</a>
-        <a href="#geography">География</a>
-        <a href="#faq">FAQ</a>
-        <a href="/blog/">Блог</a>
+        <a href="#geography" class="nav-secondary">География</a>
+        <a href="#faq" class="nav-secondary">FAQ</a>
+        <a href="/blog/" class="nav-blog">Блог</a>
       </nav>
     </div>
     <div class="header-actions">
@@ -1800,6 +1807,57 @@ document.querySelectorAll('form').forEach(form => {
     }
   });
 });
+
+// Надёжный переход по якорям: страница «разъезжается» после загрузки (галерея, картинки),
+// из-за этого браузер прокручивает не туда (например, на FAQ вместо формы). Подправляем
+// положение, пока высота страницы меняется и посетитель сам не начал скроллить.
+(function () {
+  const header = document.getElementById('site-header');
+  let lastInput = 0;
+  ['wheel', 'touchstart', 'touchmove', 'keydown', 'mousedown'].forEach(ev =>
+    addEventListener(ev, () => { lastInput = Date.now(); }, { passive: true }));
+  const offset = () => (header ? header.offsetHeight : 0) + 8;
+  const targetFromHash = () => {
+    if (location.hash.length < 2) return null;
+    try { return document.getElementById(decodeURIComponent(location.hash.slice(1))); } catch (e) { return null; }
+  };
+  const snap = (el, smooth) => {
+    const y = el.getBoundingClientRect().top + scrollY - offset();
+    scrollTo({ top: Math.max(0, y), behavior: smooth ? 'smooth' : 'instant' });
+  };
+  const keepAligned = (el, ms) => {
+    const t0 = Date.now();
+    const fix = () => {
+      if (Date.now() - lastInput < 1200) return;
+      if (Math.abs(el.getBoundingClientRect().top - offset()) > 4) snap(el, false);
+    };
+    const ro = new ResizeObserver(() => { if (Date.now() - t0 < ms) fix(); else ro.disconnect(); });
+    ro.observe(document.body);
+    [300, 900, 2000, 4000].forEach(t => setTimeout(fix, t));
+    setTimeout(() => ro.disconnect(), ms + 500);
+  };
+  const eagerImages = () => document.querySelectorAll('img[loading="lazy"]').forEach(i => { i.loading = 'eager'; });
+
+  const initial = targetFromHash();
+  if (initial) { eagerImages(); addEventListener('load', () => { lastInput = 0; snap(initial, false); }); keepAligned(initial, 6000); }
+
+  document.addEventListener('click', e => {
+    const a = e.target.closest('a[href^="#"]');
+    if (!a) return;
+    const id = a.getAttribute('href').slice(1);
+    const el = id && document.getElementById(id);
+    if (!el) return;
+    e.preventDefault();
+    eagerImages();
+    lastInput = 0;
+    history.pushState(null, '', '#' + id);
+    snap(el, true);
+    keepAligned(el, 4000);
+    if (typeof mobileNavPanel !== 'undefined' && mobileNavPanel.classList.contains('open')) {
+      mobileNavPanel.classList.remove('open'); menuToggle.classList.remove('open'); menuToggle.setAttribute('aria-expanded', false);
+    }
+  });
+})();
 </script>
 </body>
 </html>
