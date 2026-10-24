@@ -104,17 +104,35 @@ html { scroll-behavior: smooth; }
 </head>
 <body>
 <header class="site-header">
-  <div class="wrap header-inner">
-    <a href="/" class="brand"><img src="/assets/brand/logo.png" alt="ВИМ-ИНЖЕНЕРКА" width="40" height="40">
-      <span><b>ВИМ-ИНЖЕНЕРКА</b><small>Электрика и сантехника · Самара</small></span></a>
-    <nav>
+  <div class="header-inner">
+    <a href="/" class="brand"><img src="/assets/brand/logo.png" alt="ВИМ-ИНЖЕНЕРКА" width="36" height="36">
+      <span class="header-brand"><span class="brand-name">ВИМ-ИНЖЕНЕРКА</span><span class="brand-sub">Частная бригада</span><span class="brand-tagline">Электрика и сантехника · Самара</span></span></a>
+    <nav class="header-nav" aria-label="Основное меню">
       <a href="/#services">Услуги</a>
       <a href="/#portfolio">Портфолио</a>
-      <a href="/domovoy/" class="active">Домовой</a>
-      <a href="/blog/">Блог</a>
-      <a href="/#final-cta" class="nav-cta">Заявка</a>
+      <a href="/blog/" class="nav-blog">Блог</a>
+      <a href="/domovoy/">Домовой</a>
     </nav>
+    <div class="header-actions">
+      <a class="header-phone" href="mailto:i.modelirovanie@yandex.ru">i.modelirovanie@yandex.ru<span>Написать на почту</span></a>
+      <button class="menu-toggle" id="menu-toggle" aria-label="Открыть меню" aria-expanded="false"><span></span><span></span><span></span></button>
+    </div>
   </div>
+  <nav class="mobile-nav-panel" id="mobile-nav-panel">
+    <a href="/#services">Услуги</a>
+    <a href="/#process">Как работаем</a>
+    <a href="/#portfolio">Портфолио</a>
+    <a href="/#geography">География</a>
+    <a href="/#faq">FAQ</a>
+    <a href="/blog/" class="nav-blog">Блог</a>
+    <a href="/domovoy/">Домовой</a>
+    <a href="tel:+79934660555">+7 993 466-05-55</a>
+  </nav>
+  <script>
+  (function(){var t=document.getElementById('menu-toggle'),p=document.getElementById('mobile-nav-panel');
+  t.addEventListener('click',function(){var o=p.classList.toggle('open');t.classList.toggle('open',o);t.setAttribute('aria-expanded',o);});
+  p.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){p.classList.remove('open');t.classList.remove('open');});});})();
+  </script>
 </header>
 
 <main class="wrap">
