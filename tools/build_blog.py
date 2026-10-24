@@ -332,6 +332,7 @@ def build_sitemap(posts):
     today = datetime.now().strftime("%Y-%m-%d")
     urls = [(f"{SITE}/", today, "weekly", "1.0"),
             (f"{SITE}/blog/", posts[0]["date"] if posts else today, "weekly", "0.8")]
+    urls.append((f"{SITE}/domovoy/", "2026-10-24", "monthly", "0.7"))
     urls += [(f"{SITE}/blog/{p['slug']}/", p.get("updated", p["date"]), "monthly", "0.7") for p in posts]
     urls.append((f"{SITE}/privacy-policy.html", "2026-10-05", "yearly", "0.2"))
     xml = '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
