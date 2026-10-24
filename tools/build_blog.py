@@ -259,6 +259,12 @@ def page(title, desc, canonical, og_image, body, extra_head="", og_type="website
 """
 
 
+def seo_title(title):
+    """Название бренда добавляем, только если title не длиннее ~70 знаков (иначе обрежут в выдаче)."""
+    full = f"{title} — {SITE_NAME}"
+    return full if len(full) <= 70 else title
+
+
 def card(p):
     return f"""<a class="card" href="/blog/{p['slug']}/">
   <img src="{html.escape(p['image'], quote=True)}" alt="" loading="lazy">
@@ -316,7 +322,7 @@ def build_post(p, all_posts):
     d = OUT_DIR / p["slug"]
     d.mkdir(parents=True, exist_ok=True)
     (d / "index.html").write_text(
-        page(f"{p['title']} — {SITE_NAME}", p["description"], url, abs_url(p["image"]), body, extra, "article"),
+        page(seo_title(p["title"]), p["description"], url, abs_url(p["image"]), body, extra, "article"),
         encoding="utf-8")
 
 
@@ -328,8 +334,18 @@ def build_index(posts):
 <div class="grid">{cards}</div>
 {CTA}
 </main>"""
+    import json
+    ld = {"@context": "https://schema.org", "@type": "Blog", "name": BLOG_TITLE, "description": BLOG_DESC,
+          "url": f"{SITE}/blog/", "inLanguage": "ru",
+          "publisher": {"@type": "Organization", "name": SITE_NAME, "url": f"{SITE}/"},
+          "blogPost": [{"@type": "BlogPosting", "headline": p["title"], "url": f"{SITE}/blog/{p['slug']}/",
+                        "datePublished": p["date"]} for p in posts]}
+    crumbs = {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
+        {"@type": "ListItem", "position": 1, "name": "Главная", "item": f"{SITE}/"},
+        {"@type": "ListItem", "position": 2, "name": "Блог", "item": f"{SITE}/blog/"}]}
+    extra = "".join(f'<script type="application/ld+json">{json.dumps(o, ensure_ascii=False)}</script>' for o in (ld, crumbs))
     (OUT_DIR / "index.html").write_text(
-        page(BLOG_TITLE, BLOG_DESC, f"{SITE}/blog/", OG_DEFAULT, body), encoding="utf-8")
+        page(BLOG_TITLE, BLOG_DESC, f"{SITE}/blog/", OG_DEFAULT, body, extra), encoding="utf-8")
 
 
 def build_rss(posts):
