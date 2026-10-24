@@ -68,6 +68,7 @@ main { padding-top: 28px; }
 .crumbs { font-size: 0.82rem; color: var(--muted); margin-bottom: 18px; }
 .crumbs a { text-decoration: none; }
 .crumbs a:hover { color: var(--accent-dk); }
+main.wrap > .crumbs { max-width: 760px; margin-left: auto; margin-right: auto; }
 .tag { display: inline-block; font-family: var(--font-mono); font-size: 0.7rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent-dk); }
 .lead { font-size: 1.1rem; color: var(--muted); max-width: 720px; }
 
