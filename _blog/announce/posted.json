@@ -1,22 +1,27 @@
 {
   "oshibki-elektriki-karkasnyj-sip-dom": {
     "telegram": "ok",
-    "vk": "ok"
+    "vk": "ok",
+    "social_version": 1
   },
   "shchitok-v-chastnom-dome": {
     "telegram": "ok",
-    "vk": "ok"
+    "vk": "ok",
+    "social_version": 1
   },
   "podgotovka-doma-k-zime-elektrika-santehnika": {
     "telegram": "ok",
-    "vk": "ok"
+    "vk": "ok",
+    "social_version": 1
   },
   "vybivaet-avtomat-zimoj": {
     "telegram": "ok",
-    "vk": "ok"
+    "vk": "ok",
+    "social_version": 1
   },
   "greyushchij-kabel-vodoprovod-kanalizatsiya": {
     "telegram": "ok",
-    "vk": "ok"
+    "vk": "ok",
+    "social_version": 1
   }
 }
