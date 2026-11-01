@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Блог ВИМ-ИНЖЕНЕРКА — панель</title>
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+  <header class="top">
+    <div>
+      <h1>Блог — панель владельца</h1>
+      <p class="muted" id="repo-path"></p>
+    </div>
+    <button type="button" class="btn ghost" id="btn-refresh">Обновить</button>
+  </header>
+
+  <nav class="tabs" role="tablist">
+    <button type="button" class="tab active" data-tab="pipeline">Пайплайн</button>
+    <button type="button" class="tab" data-tab="photos">Фото и PERSONA</button>
+    <button type="button" class="tab" data-tab="articles">Статьи</button>
+    <button type="button" class="tab" data-tab="facts">FACTS.md</button>
+  </nav>
+
+  <main>
+    <section id="panel-pipeline" class="panel active">
+      <div class="cards" id="status-cards"></div>
+      <h2>Открытые PR со статьями</h2>
+      <div id="pr-list" class="list"></div>
+      <h2>Агент и ссылки</h2>
+      <div id="agent-info" class="box"></div>
+      <h2>Очередь тем (первые 8)</h2>
+      <ol id="topic-preview"></ol>
+    </section>
+
+    <section id="panel-photos" class="panel">
+      <div class="alert" id="photo-warn"></div>
+      <div class="upload box">
+        <h2>Добавить фото</h2>
+        <p class="muted">Файл → <code>assets/photos/</code> и новая строка в <code>PERSONA.md</code> (агент увидит после commit в GitHub).</p>
+        <form id="upload-form">
+          <label>Файл <input type="file" name="file" accept="image/*" required /></label>
+          <label>Имя в репо (необяз.) <input type="text" name="filename" placeholder="grejushchij-kabel.jpg" /></label>
+          <label>Что на фото (для PERSONA) <textarea name="description" rows="2" required></textarea></label>
+          <label class="row"><input type="checkbox" name="cover_ok" checked /> Подходит для обложки 1200×630</label>
+          <label>Focus (если вертикальное) <input type="text" name="focus" placeholder="0.35" /></label>
+          <button type="submit" class="btn">Сохранить локально</button>
+        </form>
+        <p id="upload-msg" class="msg"></p>
+      </div>
+      <h2>Каталог</h2>
+      <p class="muted" id="photo-stats"></p>
+      <div id="photo-grid" class="grid"></div>
+    </section>
+
+    <section id="panel-articles" class="panel">
+      <p class="muted">Правка markdown → сборка → push в <code>main</code>. GitHub Pages обновит сайт; при отмеченной галочке растёт <code>social_version</code> и Actions снова выложит полный текст с фото в Telegram и VK. Агент не нужен.</p>
+      <div class="articles-layout">
+        <aside class="box article-list-wrap">
+          <h2>Опубликованные</h2>
+          <ul id="article-list" class="article-list"></ul>
+        </aside>
+        <div class="box article-editor">
+          <div class="editor-head">
+            <h2 id="editor-title">Выберите статью</h2>
+            <p class="muted" id="editor-meta"></p>
+          </div>
+          <textarea id="article-raw" class="code" rows="22" spellcheck="false" disabled placeholder="---&#10;title: ...&#10;---&#10;Текст статьи"></textarea>
+          <p class="muted" id="article-wordcount"></p>
+          <label class="row"><input type="checkbox" id="republish-social" /> Обновить Telegram и VK (полная статья с фото, +1 к social_version)</label>
+          <label>Комментарий к commit (необяз.) <input type="text" id="commit-message" placeholder="blog: правки в статье про …" /></label>
+          <div class="row-btns">
+            <button type="button" class="btn ghost" id="save-article-local" disabled>Сохранить только на диск</button>
+            <button type="button" class="btn" id="release-article" disabled>Собрать и отправить в GitHub</button>
+          </div>
+          <p id="article-msg" class="msg"></p>
+          <pre id="release-log" class="log"></pre>
+        </div>
+      </div>
+    </section>
+
+    <section id="panel-facts" class="panel">
+      <p class="muted">Агент использует только то, что здесь написано. Без выдуманных цен и историй.</p>
+      <div class="box">
+        <h2>Реальные случаи с объектов</h2>
+        <p class="hint">Формат: <code>### Заголовок</code>, блоки «Что было / Причина / Итог / Вывод».</p>
+        <textarea id="facts-cases" rows="12"></textarea>
+        <button type="button" class="btn" id="save-cases">Сохранить случаи</button>
+      </div>
+      <div class="box">
+        <h2>Цены</h2>
+        <p class="hint">Пример: <code>Монтаж точки розетки — от … ₽</code></p>
+        <textarea id="facts-prices" rows="8"></textarea>
+        <button type="button" class="btn" id="save-prices">Сохранить цены</button>
+      </div>
+      <p id="facts-msg" class="msg"></p>
+    </section>
+  </main>
+  <script src="/app.js"></script>
+</body>
+</html>

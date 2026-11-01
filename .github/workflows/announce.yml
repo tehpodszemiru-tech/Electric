@@ -8,6 +8,16 @@ on:
       - "_blog/announce/*.json"
       - "!_blog/announce/posted.json"
   workflow_dispatch:
+    inputs:
+      slug:
+        description: "slug статьи (пусто — все, кому нужна отправка)"
+        required: false
+        type: string
+      republish:
+        description: "Переопубликовать в ТГ/ВК даже без смены social_version"
+        required: false
+        type: boolean
+        default: false
 
 permissions:
   contents: write
@@ -22,12 +32,27 @@ jobs:
     timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
+      - name: Сброс отметки для принудительной переотправки
+        if: github.event_name == 'workflow_dispatch' && inputs.republish && inputs.slug
+        run: |
+          python3 <<'PY'
+          import json
+          from pathlib import Path
+          p = Path("_blog/announce/posted.json")
+          posted = json.loads(p.read_text(encoding="utf-8")) if p.exists() else {}
+          slug = "${{ inputs.slug }}"
+          rec = posted.setdefault(slug, {})
+          rec.pop("telegram", None)
+          rec.pop("vk", None)
+          p.write_text(json.dumps(posted, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+          PY
       - name: Опубликовать анонсы
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHANNEL_ID: ${{ secrets.TELEGRAM_CHANNEL_ID }}
           VK_GROUP_TOKEN: ${{ secrets.VK_GROUP_TOKEN }}
           VK_GROUP_ID: ${{ secrets.VK_GROUP_ID }}
+          REPUBLISH_SLUG: ${{ github.event_name == 'workflow_dispatch' && inputs.slug || '' }}
         run: python3 tools/announce.py
       - name: Запомнить, что опубликовано
         if: always()

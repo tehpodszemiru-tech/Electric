@@ -370,20 +370,38 @@ def publish_vk_teaser(text, link):
     return "ok"
 
 
+def _want_social_version(ann: dict) -> int:
+    return int(ann.get("social_version", 1))
+
+
+def _posted_social_version(done: dict) -> int:
+    return int(done.get("social_version", 0))
+
+
+def needs_social_publish(ann: dict, done: dict) -> bool:
+    """Новая статья, неудачная отправка или social_version в announce выше, чем в posted."""
+    if _want_social_version(ann) > _posted_social_version(done):
+        return True
+    return done.get("telegram") != "ok" or done.get("vk") != "ok"
+
+
 def main():
     posted = json.loads(POSTED.read_text(encoding="utf-8")) if POSTED.exists() else {}
     changed, failed = False, False
+    only_slug = os.environ.get("REPUBLISH_SLUG", "").strip()
     for f in sorted(ANN_DIR.glob("*.json")):
         slug = f.stem
         if slug == "posted":
+            continue
+        if only_slug and slug != only_slug:
             continue
         done = posted.setdefault(slug, {})
         ann = json.loads(f.read_text(encoding="utf-8"))
         link = f"{SITE}/blog/{slug}/"
         fmt = ann.get("format", "full")
-        todo = [(n, fn) for n, fn in (("telegram", None), ("vk", None)) if done.get(n) != "ok"]
-        if not todo:
+        if not needs_social_publish(ann, done):
             continue
+        todo = [("telegram", None), ("vk", None)]
         if not wait_live(link):
             print(f"{slug}: статья не открылась за отведённое время, пропуск", file=sys.stderr)
             failed = True
@@ -423,6 +441,8 @@ def main():
                 done[name] = "ok"
                 changed = True
             print(f"{slug}/{name}: {status}")
+        if done.get("telegram") == "ok" and done.get("vk") == "ok":
+            done["social_version"] = _want_social_version(ann)
     if changed and not DRY:
         POSTED.write_text(json.dumps(posted, ensure_ascii=False, indent=2), encoding="utf-8")
     return 1 if failed else 0

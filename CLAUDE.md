@@ -91,10 +91,12 @@ proektirovanie, santehnika); список фото хранится в
   горизонтальную обложку `assets/covers/<slug>.jpg` (нужен Pillow), `build_blog.py` её подхватывает. Обложки не повторять.
 - Агент-автор: `_blog/agent/PERSONA.md` (промпт мастера и правила честности),
   `FACTS.md` (реальные случаи/цены — заполняет владелец), `TOPICS.md` (контент-план).
-- Соцсети: `_blog/announce/<slug>.json` (хештеги, `format: full`) → при пуше в `main`
-  `.github/workflows/announce.yml` → `tools/announce.py` выкладывает **полный текст и фото** из
-  `_blog/posts/<slug>.md` в Telegram и VK (секреты в GitHub Actions: TELEGRAM_* , VK_*).
-  Учёт отправленного — `_blog/announce/posted.json`.
+- Соцсети: `_blog/announce/<slug>.json` (`format: full`, hashtags, **`social_version`**) → при изменении
+  этого JSON в `main` срабатывает `.github/workflows/announce.yml` → `tools/announce.py` выкладывает
+  **полный текст и фото** из `_blog/posts/<slug>.md`. Повтор после правки: увеличить `social_version`
+  (вкладка «Статьи» в `tools/blog_dashboard/` или вручную). Учёт — `_blog/announce/posted.json`.
+- Правка без агента: локальная панель `start-blog-panel.bat` → вкладка «Статьи» → сборка + push в `main`
+  (Pages = сайт; галочка «ТГ/VK» = bump `social_version` + Actions).
 - Статьи пишет облачная рутина Claude раз в неделю и открывает **pull request**;
   владелец проверяет и сливает → публикация. Без слияния ничего не выходит.
 - Правила контента из раздела выше действуют и для блога (нет «бесплатного выезда», контакты не менять).
