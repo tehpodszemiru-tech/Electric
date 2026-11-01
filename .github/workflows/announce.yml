@@ -6,6 +6,7 @@ on:
     branches: [main]
     paths:
       - "_blog/announce/*.json"
+      - "!_blog/announce/posted.json"
   workflow_dispatch:
 
 permissions:
@@ -37,5 +38,7 @@ jobs:
             git add _blog/announce/posted.json
             git commit -m "blog: отметка об опубликованных анонсах [skip ci]"
             git pull --rebase -q
+            # Даём GitHub Pages завершить деплой статьи, иначе ловим «deployment in progress».
+            sleep 150
             git push
           fi
