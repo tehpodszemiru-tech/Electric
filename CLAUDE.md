@@ -91,10 +91,10 @@ proektirovanie, santehnika); список фото хранится в
   горизонтальную обложку `assets/covers/<slug>.jpg` (нужен Pillow), `build_blog.py` её подхватывает. Обложки не повторять.
 - Агент-автор: `_blog/agent/PERSONA.md` (промпт мастера и правила честности),
   `FACTS.md` (реальные случаи/цены — заполняет владелец), `TOPICS.md` (контент-план).
-- Анонсы в соцсети: `_blog/announce/<slug>.json` → при пуше в `main` срабатывает
-  `.github/workflows/announce.yml` → `tools/announce.py` постит в Telegram и VK
-  (секреты только в GitHub Actions secrets: TELEGRAM_BOT_TOKEN, TELEGRAM_CHANNEL_ID,
-  VK_GROUP_TOKEN, VK_GROUP_ID). Учёт отправленного — `_blog/announce/posted.json`.
+- Соцсети: `_blog/announce/<slug>.json` (хештеги, `format: full`) → при пуше в `main`
+  `.github/workflows/announce.yml` → `tools/announce.py` выкладывает **полный текст и фото** из
+  `_blog/posts/<slug>.md` в Telegram и VK (секреты в GitHub Actions: TELEGRAM_* , VK_*).
+  Учёт отправленного — `_blog/announce/posted.json`.
 - Статьи пишет облачная рутина Claude раз в неделю и открывает **pull request**;
   владелец проверяет и сливает → публикация. Без слияния ничего не выходит.
 - Правила контента из раздела выше действуют и для блога (нет «бесплатного выезда», контакты не менять).
