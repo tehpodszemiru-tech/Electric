@@ -1,4 +1,18 @@
 /* Квиз — те же токены, что blog.css */
+.quiz-hero-cover {
+  max-width: 640px;
+  margin: 0 auto 20px;
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-card);
+  border: 1px solid var(--border);
+}
+.quiz-hero-cover img {
+  display: block;
+  width: 100%;
+  height: auto;
+  vertical-align: middle;
+}
 .quiz-shell { max-width: 640px; margin: 0 auto 64px; }
 .quiz-card {
   background: var(--surface);

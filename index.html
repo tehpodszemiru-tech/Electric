@@ -321,6 +321,8 @@ section { padding: 72px 0; }
 }
 .header-nav a.nav-blog { color: var(--accent); }
 .header-nav a.nav-blog:hover { color: var(--accent-lt); }
+.header-nav a.nav-quiz { color: var(--accent-dk); font-weight: 600; }
+.header-nav a.nav-quiz:hover { color: var(--accent); }
 section[id], footer[id] { scroll-margin-top: 72px; }
 .nav-blog.has-new::after {
   content: "";
@@ -519,6 +521,41 @@ section[id], footer[id] { scroll-margin-top: 72px; }
   border-color: oklch(71% 0.19 78 / 0.35);
 }
 .hero-cta { display: flex; flex-wrap: wrap; gap: 12px; }
+.hero-quiz-link {
+  margin-top: 14px;
+  font-size: 0.95rem;
+  color: var(--accent-dk);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.hero-quiz-link:hover { color: var(--accent); text-decoration: underline; }
+.quiz-promo-strip {
+  padding: 22px 0;
+  background: linear-gradient(90deg, rgba(108,92,231,0.08) 0%, rgba(0,184,148,0.08) 100%);
+  border-block: 1px solid rgba(108,92,231,0.12);
+}
+.quiz-promo-inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px 24px;
+}
+.quiz-promo-thumb {
+  flex: 0 0 120px;
+  width: 120px;
+  border-radius: var(--r);
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  border: 1px solid rgba(108,92,231,0.15);
+}
+.quiz-promo-thumb img { display: block; width: 100%; height: auto; }
+.quiz-promo-body { flex: 1; min-width: 200px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px 24px; }
+.quiz-promo-text { max-width: 640px; }
+.quiz-promo-text strong { display: block; font-size: 1.05rem; margin-bottom: 4px; color: var(--text); }
+.quiz-promo-text span { font-size: 0.92rem; color: var(--muted); }
 
 /* Hero form */
 .hero-form-card {
@@ -1208,6 +1245,7 @@ section[id], footer[id] { scroll-margin-top: 72px; }
         <a href="#geography" class="nav-secondary">География</a>
         <a href="#faq" class="nav-secondary">FAQ</a>
         <a href="/blog/" class="nav-blog">Блог</a>
+        <a href="/quiz/zima-dom/" class="nav-quiz">Тест к зиме</a>
         <a href="/domovoy/">Домовой</a>
       </nav>
     </div>
@@ -1228,6 +1266,7 @@ section[id], footer[id] { scroll-margin-top: 72px; }
     <a href="#geography">География</a>
     <a href="#faq">FAQ</a>
     <a href="/blog/" class="nav-blog">Блог</a>
+    <a href="/quiz/zima-dom/">Тест: дом к зиме</a>
     <a href="/domovoy/">Домовой</a>
     <a href="tel:+79934660555" class="mobile-nav-phone"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.62 10.79a15.05 15.05 0 0 0 6.59 6.59l2.2-2.2a1 1 0 0 1 1.01-.24c1.12.37 2.33.57 3.58.57a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1C10.4 21 3 13.6 3 4.5a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.46.57 3.58a1 1 0 0 1-.25 1.01l-2.2 2.2Z"/></svg> +7 993 466-05-55</a>
   </nav>
@@ -1250,7 +1289,9 @@ section[id], footer[id] { scroll-margin-top: 72px; }
         <div class="hero-cta">
           <a href="#final-cta" class="btn btn-primary btn-lg">Рассчитать стоимость</a>
           <a href="tel:+79934660555" class="btn btn-outline btn-lg">Позвонить</a>
+          <a href="/quiz/zima-dom/" class="btn btn-outline btn-lg">Тест: дом к зиме</a>
         </div>
+        <a class="hero-quiz-link" href="/quiz/zima-dom/">7 вопросов · ~2 мин · электрика и сантехника перед морозами →</a>
       </div>
       <div class="hero-form-card">
         <div class="form-title">Бесплатный расчёт стоимости работ</div>
@@ -1429,6 +1470,22 @@ section[id], footer[id] { scroll-margin-top: 72px; }
   </div>
 </section>
 
+<!-- QUIZ PROMO (сезонный вход на тест) -->
+<div class="quiz-promo-strip" id="quiz-promo">
+  <div class="container quiz-promo-inner">
+    <a href="/quiz/zima-dom/" class="quiz-promo-thumb" aria-hidden="true" tabindex="-1">
+      <img src="assets/covers/quiz-zima-dom-cover.jpg" width="120" height="120" alt="" loading="lazy">
+    </a>
+    <div class="quiz-promo-body">
+      <div class="quiz-promo-text">
+        <strong>Проверьте дом перед морозами</strong>
+        <span>Короткий тест по электрике и сантехнике — что успеть проверить на объекте, без регистрации.</span>
+      </div>
+      <a href="/quiz/zima-dom/" class="btn btn-primary">Пройти тест (~2 мин)</a>
+    </div>
+  </div>
+</div>
+
 <!-- PORTFOLIO -->
 <section id="portfolio" data-od-id="portfolio">
   <div class="container">
@@ -1444,11 +1501,24 @@ section[id], footer[id] { scroll-margin-top: 72px; }
     </div>
 
     <div class="tab-panel active" id="tab-elektrika">
-      <div class="gallery-grid" id="grid-elektrika"></div>
+      <div class="gallery-grid" id="grid-elektrika">
+        <div class="gallery-item"><img src="assets/photos/shchitok-montazh.jpg" alt="Монтаж электрощита в частном доме" loading="lazy"><div class="gallery-label">Монтаж щитка</div></div>
+        <div class="gallery-item"><img src="assets/photos/shchitok-avtomaty.jpg" alt="Автоматы и УЗО в электрощите" loading="lazy"><div class="gallery-label">Щит: автоматы и УЗО</div></div>
+        <div class="gallery-item"><img src="assets/photos/shchitok-korpus-moduli.jpg" alt="Сборка модулей в электрощите" loading="lazy"><div class="gallery-label">Сборка щита</div></div>
+        <div class="gallery-item"><img src="assets/photos/provodka-gofra-osb-1.jpg" alt="Прокладка проводки в гофре по OSB" loading="lazy"><div class="gallery-label">Проводка в гофре</div></div>
+        <div class="gallery-item"><img src="assets/photos/provodka-potolok.jpg" alt="Электропроводка по потолку в доме" loading="lazy"><div class="gallery-label">Разводка по потолку</div></div>
+        <div class="gallery-item"><img src="assets/photos/stabilizator-dom.jpg" alt="Стабилизатор напряжения в частном доме" loading="lazy"><div class="gallery-label">Стабилизатор</div></div>
+      </div>
     </div>
 
     <div class="tab-panel" id="tab-santehnika">
-      <div class="gallery-grid" id="grid-santehnika"></div>
+      <div class="gallery-grid" id="grid-santehnika">
+        <div class="gallery-item"><img src="assets/photos/boiler-vodonagrevatel.jpg" alt="Подключение водонагревателя в доме" loading="lazy"><div class="gallery-label">Водонагреватель</div></div>
+        <div class="gallery-item"><img src="assets/photos/kollektor-teply-pol.jpg" alt="Коллекторная группа тёплого пола" loading="lazy"><div class="gallery-label">Коллектор тёплого пола</div></div>
+        <div class="gallery-item"><img src="assets/photos/razvodka-vodosnabzhenie.jpg" alt="Разводка водоснабжения в частном доме" loading="lazy"><div class="gallery-label">Разводка воды</div></div>
+        <div class="gallery-item"><img src="assets/photos/teply-pol-kontury.jpg" alt="Контуры тёплого пола" loading="lazy"><div class="gallery-label">Контуры тёплого пола</div></div>
+        <div class="gallery-item"><img src="assets/photos/elektrokamenka.jpg" alt="Подключение электрокаменки" loading="lazy"><div class="gallery-label">Электрокаменка</div></div>
+      </div>
     </div>
 
     <div class="tab-panel" id="tab-3d">
@@ -1702,56 +1772,98 @@ document.querySelectorAll('.tab-btn').forEach(btn => {
   });
 });
 
-// Дополнительные фото из админки (Beget) — карусель под основной галереей
-(async function loadDynamicGallery() {
-  try {
-    const res = await fetch('https://leads.vim-scrum.ru/gallery');
-    if (!res.ok) return;
-    const data = await res.json();
-    const grids = {
-      elektrika: { id: 'grid-elektrika', itemClass: 'gallery-item', phIcon: '📷', phNote: 'фото скоро' },
-      proektirovanie: { id: 'grid-proektirovanie', itemClass: 'gallery-item-3d', phIcon: '🖥', phNote: 'добавим скоро' },
-      santehnika: { id: 'grid-santehnika', itemClass: 'gallery-item', phIcon: '📷', phNote: 'фото скоро' },
-    };
-    Object.entries(grids).forEach(([cat, cfg]) => {
-      const items = data[cat] || [];
-      const grid = document.getElementById(cfg.id);
-      if (!grid || !items.length) return;
-      items.forEach(it => {
-        const div = document.createElement('div');
-        div.className = cfg.itemClass;
-        if (it.file) {
-          const img = document.createElement('img');
-          img.src = 'https://leads.vim-scrum.ru/' + it.file;
-          img.alt = it.caption || ({elektrika:'Монтаж электрики в частном доме',proektirovanie:'3D-проект электрики в SketchUp',santehnika:'Монтаж сантехники в частном доме'}[cat]);
-          img.loading = 'lazy';
-          div.appendChild(img);
-          if (it.caption) {
-            const cap = document.createElement('div');
-            cap.className = 'gallery-label';
-            cap.textContent = it.caption;
-            div.appendChild(cap);
-          }
-        } else {
-          const ph = document.createElement('div');
-          ph.className = 'ph';
-          const icon = document.createElement('span');
-          icon.className = 'ph-icon';
-          icon.textContent = cfg.phIcon;
-          const txt = document.createElement('span');
-          txt.append(it.caption || '', document.createElement('br'));
-          const em = document.createElement('em');
-          em.textContent = '— ' + cfg.phNote;
-          txt.appendChild(em);
-          ph.append(icon, txt);
-          div.appendChild(ph);
-        }
-        grid.appendChild(div);
-      });
-    });
-  } catch (e) {
-    // Бэкенд недоступен — молча пропускаем, основная галерея не пострадает
+// Дополнительные фото: manifest на GitHub + опционально Beget (админка)
+function galleryPhotoUrl(file) {
+  if (!file) return '';
+  if (file.startsWith('http://') || file.startsWith('https://')) return file;
+  if (file.startsWith('assets/') || file.startsWith('/assets/')) {
+    return '/' + file.replace(/^\//, '');
   }
+  return 'https://leads.vim-scrum.ru/' + file.replace(/^\//, '');
+}
+
+async function fetchGalleryManifest(url, ms) {
+  const res = await fetch(url, { signal: AbortSignal.timeout(ms) });
+  if (!res.ok) return null;
+  return res.json();
+}
+
+function mergeGalleryManifests(base, extra) {
+  const out = { elektrika: [], proektirovanie: [], santehnika: [] };
+  for (const cat of Object.keys(out)) {
+    const seen = new Set();
+    for (const src of [base, extra]) {
+      if (!src) continue;
+      for (const it of src[cat] || []) {
+        const key = (it.id || '') + '|' + (it.file || '');
+        if (seen.has(key)) continue;
+        seen.add(key);
+        out[cat].push(it);
+      }
+    }
+  }
+  return out;
+}
+
+(async function loadDynamicGallery() {
+  const grids = {
+    elektrika: { id: 'grid-elektrika', itemClass: 'gallery-item', phIcon: '📷', phNote: 'фото скоро' },
+    proektirovanie: { id: 'grid-proektirovanie', itemClass: 'gallery-item-3d', phIcon: '🖥', phNote: 'добавим скоро' },
+    santehnika: { id: 'grid-santehnika', itemClass: 'gallery-item', phIcon: '📷', phNote: 'фото скоро' },
+  };
+  const alt = {
+    elektrika: 'Монтаж электрики в частном доме',
+    proektirovanie: '3D-проект электрики в SketchUp',
+    santehnika: 'Монтаж сантехники в частном доме',
+  };
+
+  let staticData = null;
+  let begetData = null;
+  try {
+    staticData = await fetchGalleryManifest('/assets/gallery-manifest.json', 8000);
+  } catch (e) { /* offline preview */ }
+  try {
+    begetData = await fetchGalleryManifest('https://leads.vim-scrum.ru/gallery', 8000);
+  } catch (e) { /* Beget недоступен — норма при падении VPS */ }
+
+  const data = mergeGalleryManifests(staticData || {}, begetData || {});
+
+  Object.entries(grids).forEach(([cat, cfg]) => {
+    const items = data[cat] || [];
+    const grid = document.getElementById(cfg.id);
+    if (!grid || !items.length) return;
+    items.forEach(it => {
+      const div = document.createElement('div');
+      div.className = cfg.itemClass;
+      if (it.file) {
+        const img = document.createElement('img');
+        img.src = galleryPhotoUrl(it.file);
+        img.alt = it.caption || alt[cat];
+        img.loading = 'lazy';
+        div.appendChild(img);
+        if (it.caption) {
+          const cap = document.createElement('div');
+          cap.className = 'gallery-label';
+          cap.textContent = it.caption;
+          div.appendChild(cap);
+        }
+      } else {
+        const ph = document.createElement('div');
+        ph.className = 'ph';
+        const icon = document.createElement('span');
+        icon.className = 'ph-icon';
+        icon.textContent = cfg.phIcon;
+        const txt = document.createElement('span');
+        txt.append(it.caption || '', document.createElement('br'));
+        const em = document.createElement('em');
+        em.textContent = '— ' + cfg.phNote;
+        txt.appendChild(em);
+        ph.append(icon, txt);
+        div.appendChild(ph);
+      }
+      grid.appendChild(div);
+    });
+  });
 })();
 
 // Мобильное меню (бургер)

@@ -1,0 +1,21 @@
+{
+  "elektrika": [],
+  "proektirovanie": [
+    {
+      "id": "plan-2d",
+      "file": "assets/photos/plan-2d.jpg",
+      "caption": "2D-план электрики"
+    },
+    {
+      "id": "sketchup-stena",
+      "file": "assets/photos/proekt-sketchup-stena.jpg",
+      "caption": "3D-модель в SketchUp"
+    },
+    {
+      "id": "proekt-plan-cad",
+      "file": "assets/photos/proekt-plan-cad.jpg",
+      "caption": "План в CAD"
+    }
+  ],
+  "santehnika": []
+}
