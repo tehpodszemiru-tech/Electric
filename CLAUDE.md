@@ -93,7 +93,8 @@ proektirovanie, santehnika); список фото хранится в
   `FACTS.md` (реальные случаи/цены — заполняет владелец), `TOPICS.md` (контент-план).
 - Соцсети: `_blog/announce/<slug>.json` (`format: full`, hashtags, **`social_version`**) → при изменении
   этого JSON в `main` срабатывает `.github/workflows/announce.yml` → `tools/announce.py` выкладывает
-  **полный текст и фото** из `_blog/posts/<slug>.md`. Повтор после правки: увеличить `social_version`
+  **полный текст и фото** из `_blog/posts/<slug>.md`. Обложка во ВК требует права **«Фото»** у ключа
+  сообщества или секрет `VK_USER_TOKEN` (личный ключ админа). Повтор после правки: увеличить `social_version`
   (вкладка «Статьи» в `tools/blog_dashboard/` или вручную). Учёт — `_blog/announce/posted.json`.
 - Правка без агента: локальная панель `start-blog-panel.bat` → вкладка «Статьи» → сборка + push в `main`
   (Pages = сайт; галочка «ТГ/VK» = bump `social_version` + Actions).
