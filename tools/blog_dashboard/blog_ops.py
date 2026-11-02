@@ -406,6 +406,95 @@ def run_build() -> str:
     return "\n".join(log)
 
 
+def portfolio_category(filename: str) -> str | None:
+    f = filename.lower()
+    if f.startswith(("proekt-", "plan-2d", "3d-viz")):
+        return "proektirovanie"
+    if any(k in f for k in ("shchitok", "provodka", "stabilizator", "gkl-karkas", "sip-dom")):
+        return "elektrika"
+    if any(
+        k in f
+        for k in (
+            "boiler",
+            "vodonag",
+            "kollektor",
+            "teply",
+            "razvodka",
+            "elektrokamenka",
+            "greyushchij",
+            "vodoprovod",
+        )
+    ):
+        return "santehnika"
+    return None
+
+
+def _persona_filenames(row_file: str) -> list[str]:
+    found = re.findall(r"`([^`]+)`", row_file)
+    if found:
+        return [f.strip() for f in found if f.strip()]
+    return [row_file.strip()] if row_file.strip() else []
+
+
+def sync_gallery_manifest_from_persona() -> dict:
+    """Резерв портфолио на GitHub: подписи из PERSONA → assets/gallery-manifest.json."""
+    rows = parse_persona_rows()
+    disk = set(list_disk_photos())
+    out: dict[str, list] = {c: [] for c in ("elektrika", "proektirovanie", "santehnika")}
+    seen: set[str] = set()
+    for row in rows:
+        for fname in _persona_filenames(row["file"]):
+            fname = fname.strip()
+            if not fname or fname not in disk or "," in fname:
+                continue
+            cat = portfolio_category(fname)
+            if not cat:
+                continue
+            key = f"{cat}|{fname}"
+            if key in seen:
+                continue
+            seen.add(key)
+            cap = row["description"].strip()
+            if len(cap) > 140:
+                cap = cap[:137] + "…"
+            out[cat].append(
+                {
+                    "id": Path(fname).stem.replace(".", "-"),
+                    "file": f"assets/photos/{fname}",
+                    "caption": cap,
+                }
+            )
+    path = repo_root() / "assets" / "gallery-manifest.json"
+    path.write_text(json.dumps(out, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    return {
+        "ok": True,
+        "path": str(path.relative_to(repo_root())).replace("\\", "/"),
+        "counts": {k: len(v) for k, v in out.items()},
+    }
+
+
+def git_publish_gallery_manifest() -> dict:
+    root = repo_root()
+    sync_gallery_manifest_from_persona()
+    _git("add", "assets/gallery-manifest.json")
+    st = _git("status", "--porcelain", "assets/gallery-manifest.json")
+    if not st.stdout.strip():
+        return {"ok": True, "committed": False, "message": "manifest без изменений"}
+    email = os.environ.get("BLOG_GIT_EMAIL", "tehpodszemi.ru@gmail.com")
+    name = os.environ.get("BLOG_GIT_NAME", "tehpodszemiru-tech")
+    commit = _git(
+        "-c", f"user.email={email}",
+        "-c", f"user.name={name}",
+        "commit", "-m", "chore: gallery-manifest из PERSONA (резерв без Beget)",
+    )
+    if commit.returncode != 0:
+        raise RuntimeError(commit.stderr)
+    push = _git("push", "origin", "main")
+    if push.returncode != 0:
+        raise RuntimeError(push.stderr)
+    return {"ok": True, "committed": True}
+
+
 def git_publish_article(
     slug: str,
     *,

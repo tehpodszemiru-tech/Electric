@@ -1,21 +1,98 @@
 {
-  "elektrika": [],
-  "proektirovanie": [
+  "elektrika": [
     {
-      "id": "plan-2d",
-      "file": "assets/photos/plan-2d.jpg",
-      "caption": "2D-план электрики"
+      "id": "shchitok-montazh",
+      "file": "assets/photos/shchitok-montazh.jpg",
+      "caption": "Щиток до подключения автоматов: пучки кабелей, шины PE/N, каркас из профиля"
     },
     {
-      "id": "sketchup-stena",
+      "id": "shchitok-avtomaty",
+      "file": "assets/photos/shchitok-avtomaty.jpg",
+      "caption": "Металлический щиток: счётчик, вводной аппарат, шесть дифавтоматов C16 на 30 мА, гофра"
+    },
+    {
+      "id": "shchitok-korpus-moduli",
+      "file": "assets/photos/shchitok-korpus-moduli.jpg",
+      "caption": "Щиток в белом корпусе с модульными аппаратами, шины, кабели в серой гофре внизу"
+    },
+    {
+      "id": "provodka-potolok",
+      "file": "assets/photos/provodka-potolok.jpg",
+      "caption": "Каркасный дом: кабель в гофре по потолку, выпуски вниз к будущим точкам, стены из ГКЛ"
+    },
+    {
+      "id": "provodka-gofra-osb-1",
+      "file": "assets/photos/provodka-gofra-osb-1.jpg",
+      "caption": "Иллюстрация: потолок из OSB и брус, кабели в серой гофре сходятся к монтажным коробкам"
+    },
+    {
+      "id": "provodka-gofra-osb-2",
+      "file": "assets/photos/provodka-gofra-osb-2.jpg",
+      "caption": "Иллюстрация: угол потолка из OSB с гофрой и коробками, окно"
+    },
+    {
+      "id": "provodka-gofra-osb-3",
+      "file": "assets/photos/provodka-gofra-osb-3.jpg",
+      "caption": "Иллюстрация: потолок из OSB, трассы в гофре, окно"
+    },
+    {
+      "id": "gkl-karkas",
+      "file": "assets/photos/gkl-karkas.jpg",
+      "caption": "Обшивка каркаса влагостойким ГКЛ, пароизоляция, OSB в стыке"
+    },
+    {
+      "id": "sip-dom-interior",
+      "file": "assets/photos/sip-dom-interior.jpg",
+      "caption": "Интерьер дома: обшивка ГКЛ, OSB"
+    },
+    {
+      "id": "stabilizator-dom",
+      "file": "assets/photos/stabilizator-dom.jpg",
+      "caption": "Стабилизатор и щиток на стене из вагонки в деревянном доме"
+    }
+  ],
+  "proektirovanie": [
+    {
+      "id": "proekt-sketchup-stena",
       "file": "assets/photos/proekt-sketchup-stena.jpg",
-      "caption": "3D-модель в SketchUp"
+      "caption": "3D-модель стены в SketchUp с размерами положения розеток и выключателей"
     },
     {
       "id": "proekt-plan-cad",
       "file": "assets/photos/proekt-plan-cad.jpg",
-      "caption": "План в CAD"
+      "caption": "Фрагмент электрического плана в CAD: розетки, высоты установки, размеры"
     }
   ],
-  "santehnika": []
+  "santehnika": [
+    {
+      "id": "greyushchij-kabel-vodoprovod",
+      "file": "assets/photos/greyushchij-kabel-vodoprovod.jpg",
+      "caption": "Греющий кабель у водопроводной трубы у пола, запорная арматура"
+    },
+    {
+      "id": "razvodka-vodosnabzhenie",
+      "file": "assets/photos/razvodka-vodosnabzhenie.jpg",
+      "caption": "Санузел до отделки: водоснабжение и канализация, инсталляция"
+    },
+    {
+      "id": "kollektor-teply-pol",
+      "file": "assets/photos/kollektor-teply-pol.jpg",
+      "caption": "Коллектор тёплого пола и котёл"
+    },
+    {
+      "id": "teply-pol-kontury",
+      "file": "assets/photos/teply-pol-kontury.jpg",
+      "caption": "Контуры водяного тёплого пола под сеткой"
+    },
+    {
+      "id": "boiler-vodonagrevatel",
+      "file": "assets/photos/boiler-vodonagrevatel.jpg",
+      "caption": "Накопительный водонагреватель"
+    },
+    {
+      "id": "elektrokamenka",
+      "file": "assets/photos/elektrokamenka.jpg",
+      "caption": "Электрокаменка в углу бани, экран из негорючего листа"
+    }
+  ]
 }

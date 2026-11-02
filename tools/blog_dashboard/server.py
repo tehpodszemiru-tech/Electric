@@ -115,6 +115,22 @@ def api_facts_prices(body: dict):
     return {"ok": True}
 
 
+@APP.post("/api/portfolio/sync-manifest")
+def api_sync_portfolio_manifest(body: dict | None = None):
+    push = bool((body or {}).get("push"))
+    try:
+        info = ops.sync_gallery_manifest_from_persona()
+    except Exception as e:
+        raise HTTPException(500, str(e))
+    if push:
+        try:
+            ops._git("pull", "--rebase", "origin", "main")
+            info.update(ops.git_publish_gallery_manifest())
+        except RuntimeError as e:
+            raise HTTPException(500, str(e))
+    return info
+
+
 @APP.get("/api/articles")
 def api_articles():
     items = []

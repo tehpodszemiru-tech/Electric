@@ -9,6 +9,8 @@
 обложки; ключ сообщества часто не даёт photos.getWallUploadServer (ошибка 27).
 DRY_RUN=1 — без отправки.
 VK_ADD_PHOTO=1 + REPUBLISH_SLUG — обложка к записи через wall.edit (нужны VK_USER_TOKEN и VK_POST_ID).
+При повторной публикации (social_version выше) скрипт редактирует посты по
+telegram_message_id и vk_post_id из posted.json, без новых записей.
 """
 import html
 import json
@@ -256,21 +258,66 @@ def effective_format(ann: dict) -> str:
 def publish_telegram_single(tg_html: str, link: str):
     token, chan = os.environ.get("TELEGRAM_BOT_TOKEN"), os.environ.get("TELEGRAM_CHANNEL_ID")
     if not (token and chan):
-        return "skip"
+        return "skip", None
     if DRY:
         print("[TG]", len(tg_html), "chars")
-        return "dry"
+        return "dry", None
     data = urllib.parse.urlencode({
         "chat_id": chan,
         "text": tg_html,
         "parse_mode": "HTML",
         "link_preview_options": json.dumps({"url": link, "prefer_large_media": True}),
     }).encode()
-    http(f"https://api.telegram.org/bot{token}/sendMessage", data)
+    status, body, _ctype = http(f"https://api.telegram.org/bot{token}/sendMessage", data)
+    res = json.loads(body)
+    if not res.get("ok"):
+        raise RuntimeError(f"Telegram sendMessage: {res}")
+    return "ok", res["result"]["message_id"]
+
+
+def edit_telegram_single(message_id: int, tg_html: str, link: str):
+    token, chan = os.environ.get("TELEGRAM_BOT_TOKEN"), os.environ.get("TELEGRAM_CHANNEL_ID")
+    if not (token and chan):
+        return "skip"
+    if DRY:
+        print(f"[TG edit] msg_id={message_id}", len(tg_html), "chars")
+        return "dry"
+    data = urllib.parse.urlencode({
+        "chat_id": chan,
+        "message_id": int(message_id),
+        "text": tg_html,
+        "parse_mode": "HTML",
+        "link_preview_options": json.dumps({"url": link, "prefer_large_media": True}),
+    }).encode()
+    status, body, _ctype = http(f"https://api.telegram.org/bot{token}/editMessageText", data)
+    res = json.loads(body)
+    if not res.get("ok"):
+        raise RuntimeError(f"Telegram editMessageText: {res}")
     return "ok"
 
 
 def publish_telegram_teaser(text, link):
+    token, chan = os.environ.get("TELEGRAM_BOT_TOKEN"), os.environ.get("TELEGRAM_CHANNEL_ID")
+    if not (token and chan):
+        return "skip", None
+    body = f"{text}\n\n" + f'<a href="{link}">Читать статью полностью →</a>'
+    if len(body) > TG_LIMIT:
+        body = _fit_tg(text, TG_LIMIT, f'\n\n<a href="{html.escape(link, quote=True)}">Читать полностью →</a>')
+    if DRY:
+        print("[TG teaser]", body[:200], "…")
+        return "dry", None
+    data = urllib.parse.urlencode({
+        "chat_id": chan, "text": body, "parse_mode": "HTML",
+        "link_preview_options": json.dumps({"url": link, "prefer_large_media": True}),
+    }).encode()
+    status, raw, _ctype = http(f"https://api.telegram.org/bot{token}/sendMessage", data)
+    res = json.loads(raw)
+    if not res.get("ok"):
+        raise RuntimeError(f"Telegram sendMessage: {res}")
+    return "ok", res["result"]["message_id"]
+
+
+def edit_telegram_teaser(message_id: int, text, link):
     token, chan = os.environ.get("TELEGRAM_BOT_TOKEN"), os.environ.get("TELEGRAM_CHANNEL_ID")
     if not (token and chan):
         return "skip"
@@ -278,13 +325,19 @@ def publish_telegram_teaser(text, link):
     if len(body) > TG_LIMIT:
         body = _fit_tg(text, TG_LIMIT, f'\n\n<a href="{html.escape(link, quote=True)}">Читать полностью →</a>')
     if DRY:
-        print("[TG teaser]", body[:200], "…")
+        print(f"[TG teaser edit] msg_id={message_id}")
         return "dry"
     data = urllib.parse.urlencode({
-        "chat_id": chan, "text": body, "parse_mode": "HTML",
+        "chat_id": chan,
+        "message_id": int(message_id),
+        "text": body,
+        "parse_mode": "HTML",
         "link_preview_options": json.dumps({"url": link, "prefer_large_media": True}),
     }).encode()
-    http(f"https://api.telegram.org/bot{token}/sendMessage", data)
+    status, raw, _ctype = http(f"https://api.telegram.org/bot{token}/editMessageText", data)
+    res = json.loads(raw)
+    if not res.get("ok"):
+        raise RuntimeError(f"Telegram editMessageText: {res}")
     return "ok"
 
 
@@ -446,6 +499,30 @@ def vk_add_cover_to_existing_post(slug: str, link: str, cover_url: str) -> str:
     return "ok"
 
 
+def vk_edit_wall_post(post_id: int, message: str, cover_url: str, link: str) -> str:
+    """Обновляет текст и вложения существующей записи (без wall.post)."""
+    _group_token, gid = _vk_group_ids()
+    edit_token = _vk_edit_api_token()
+    if not (edit_token and gid):
+        return "skip"
+    owner = f"-{gid}"
+    params = {
+        "owner_id": owner,
+        "post_id": int(post_id),
+        "message": message[:VK_LIMIT],
+    }
+    if cover_url:
+        photo_att = _vk_upload_wall_photo(_group_token or edit_token, gid, cover_url)
+        params["attachments"] = f"{photo_att},{link}"
+    else:
+        params["attachments"] = link
+    if DRY:
+        print(f"[VK edit] post_id={post_id} cover={cover_url}")
+        return "dry"
+    _vk_api("wall.edit", params, edit_token)
+    return "ok"
+
+
 def publish_vk_single(vk_text: str, cover_url: str, link: str):
     token, gid = _vk_group_ids()
     if not (token and gid):
@@ -558,9 +635,20 @@ def main():
             continue
 
         want, have = _want_social_version(ann), _posted_social_version(done)
-        if force or (want > have and have > 0):
+        is_republish = force or (want > have and have > 0)
+        tg_edit_id = done.get("telegram_message_id")
+        vk_edit_id = done.get("vk_post_id")
+        can_edit_tg = is_republish and tg_edit_id
+        can_edit_vk = is_republish and vk_edit_id
+
+        if is_republish and not (can_edit_tg or can_edit_vk):
             done.pop("telegram", None)
             done.pop("vk", None)
+            print(
+                f"{slug}: нет telegram_message_id / vk_post_id в posted.json — "
+                "будет новый пост (старый вручную удалите или оставьте)",
+                file=sys.stderr,
+            )
 
         if not wait_live(link):
             print(f"{slug}: статья не открылась за отведённое время, пропуск", file=sys.stderr)
@@ -586,13 +674,34 @@ def main():
                     if not text:
                         continue
                     if name == "telegram":
-                        status = publish_telegram_teaser(text, link)
+                        if can_edit_tg:
+                            status = edit_telegram_teaser(int(tg_edit_id), ann.get("telegram", "").strip(), link)
+                        else:
+                            status, tg_msg_id = publish_telegram_teaser(text, link)
+                            if status == "ok" and tg_msg_id:
+                                done["telegram_message_id"] = tg_msg_id
                     else:
-                        status, vk_post_id = publish_vk_teaser(text, link, cover)
+                        vk_msg = f"{text}\n\nЧитать полностью: {link}"
+                        if len(vk_msg) > VK_LIMIT:
+                            vk_msg = _fit_plain(text, VK_LIMIT, f"\n\nЧитать полностью: {link}")
+                        if can_edit_vk:
+                            status = vk_edit_wall_post(int(vk_edit_id), vk_msg, cover, link)
+                            vk_post_id = int(vk_edit_id)
+                        else:
+                            status, vk_post_id = publish_vk_teaser(ann.get("vk", "").strip(), link, cover)
                 elif name == "telegram":
-                    status = publish_telegram_single(tg_html, link)
+                    if can_edit_tg:
+                        status = edit_telegram_single(int(tg_edit_id), tg_html, link)
+                    else:
+                        status, tg_msg_id = publish_telegram_single(tg_html, link)
+                        if status == "ok" and tg_msg_id:
+                            done["telegram_message_id"] = tg_msg_id
                 else:
-                    status, vk_post_id = publish_vk_single(vk_text, cover, link)
+                    if can_edit_vk:
+                        status = vk_edit_wall_post(int(vk_edit_id), vk_text, cover, link)
+                        vk_post_id = int(vk_edit_id)
+                    else:
+                        status, vk_post_id = publish_vk_single(vk_text, cover, link)
             except Exception as e:
                 print(f"{slug}/{name}: ОШИБКА {e}", file=sys.stderr)
                 failed = True
@@ -602,7 +711,8 @@ def main():
                 if name == "vk" and vk_post_id:
                     done["vk_post_id"] = vk_post_id
                 changed = True
-            print(f"{slug}/{name}: {status}")
+            action = "edit" if (name == "telegram" and can_edit_tg) or (name == "vk" and can_edit_vk) else "post"
+            print(f"{slug}/{name}: {status} ({action})")
 
         if done.get("telegram") == "ok" and done.get("vk") == "ok":
             done["social_version"] = _want_social_version(ann)

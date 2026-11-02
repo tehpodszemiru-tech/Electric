@@ -100,7 +100,8 @@ proektirovanie, santehnika); список фото хранится в
   этого JSON в `main` срабатывает `.github/workflows/announce.yml` → `tools/announce.py` выкладывает
   **полный текст и фото** из `_blog/posts/<slug>.md`. Обложка во ВК требует права **«Фото»** у ключа
   сообщества или секрет `VK_USER_TOKEN` (личный ключ админа). Повтор после правки: увеличить `social_version`
-  (вкладка «Статьи» в `tools/blog_dashboard/` или вручную). Учёт — `_blog/announce/posted.json`.
+  (вкладка «Статьи» в `tools/blog_dashboard/` или вручную). Учёт — `_blog/announce/posted.json`
+  (`telegram_message_id`, `vk_post_id` для правки постов без дублей).
 - Правка без агента: локальная панель `start-blog-panel.bat` → вкладка «Статьи» → сборка + push в `main`
   (Pages = сайт; галочка «ТГ/VK» = bump `social_version` + Actions).
 - Статьи пишет облачная рутина Claude раз в неделю и открывает **pull request**;

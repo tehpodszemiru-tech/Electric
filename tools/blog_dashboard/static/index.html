@@ -50,6 +50,12 @@
       </div>
       <h2>Каталог</h2>
       <p class="muted" id="photo-stats"></p>
+      <p class="muted">Пока Beget недоступен: подписи из таблицы PERSONA можно выгрузить в <code>assets/gallery-manifest.json</code> — сайт подмешает их к портфолио.</p>
+      <div class="row-btns" style="margin-bottom:16px">
+        <button type="button" class="btn ghost" id="sync-manifest-local">Обновить manifest локально</button>
+        <button type="button" class="btn" id="sync-manifest-push">Обновить manifest и push в GitHub</button>
+      </div>
+      <p id="manifest-msg" class="msg"></p>
       <div id="photo-grid" class="grid"></div>
     </section>
 
@@ -67,7 +73,7 @@
           </div>
           <textarea id="article-raw" class="code" rows="22" spellcheck="false" disabled placeholder="---&#10;title: ...&#10;---&#10;Текст статьи"></textarea>
           <p class="muted" id="article-wordcount"></p>
-          <label class="row"><input type="checkbox" id="republish-social" /> Снова отправить в Telegram и VK (один пост, +1 к social_version; полный текст на сайте)</label>
+          <label class="row"><input type="checkbox" id="republish-social" /> Обновить посты в Telegram и VK (редактирование по id из posted.json; без id — новый пост, старый удалите вручную)</label>
           <label>Комментарий к commit (необяз.) <input type="text" id="commit-message" placeholder="blog: правки в статье про …" /></label>
           <div class="row-btns">
             <button type="button" class="btn ghost" id="save-article-local" disabled>Сохранить только на диск</button>

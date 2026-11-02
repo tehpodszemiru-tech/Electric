@@ -1873,6 +1873,10 @@ function mergeGalleryManifests(base, extra) {
     const grid = document.getElementById(cfg.id);
     if (!grid || !items.length) return;
     items.forEach(it => {
+      const src = galleryPhotoUrl(it.file);
+      if (src && [...grid.querySelectorAll("img")].some((img) => img.getAttribute("src") === src)) {
+        return;
+      }
       const div = document.createElement('div');
       div.className = cfg.itemClass;
       if (it.file) {

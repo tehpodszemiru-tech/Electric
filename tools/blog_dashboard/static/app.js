@@ -136,6 +136,28 @@ async function init() {
     await saveFacts("/api/facts/prices", el("facts-prices").value, "цены");
   });
 
+  async function syncManifest(push) {
+    const msg = el("manifest-msg");
+    msg.textContent = push ? "Manifest и push…" : "Manifest…";
+    msg.className = "msg";
+    try {
+      const r = await api("/api/portfolio/sync-manifest", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ push }),
+      });
+      msg.textContent =
+        `Готово: ${JSON.stringify(r.counts || r)}` +
+        (r.committed === false ? " (без изменений)" : "");
+      msg.className = "msg ok";
+    } catch (err) {
+      msg.textContent = err.message;
+      msg.className = "msg err";
+    }
+  }
+  el("sync-manifest-local").addEventListener("click", () => syncManifest(false));
+  el("sync-manifest-push").addEventListener("click", () => syncManifest(true));
+
   await refreshAll();
 }
 
@@ -185,7 +207,9 @@ async function selectArticle(slug) {
     `<a href="${d.site_url}" target="_blank" rel="noopener">На сайте</a> · ` +
     `${escapeHtml(d.category)} · social_version ${d.announce.social_version} ` +
     `(в ТГ/ВК: ${d.posted.social_version || 0}) · ` +
-    `ТГ ${d.posted.telegram === "ok" ? "✓" : "—"} · VK ${d.posted.vk === "ok" ? "✓" : "—"}`;
+    `ТГ ${d.posted.telegram === "ok" ? "✓" : "—"} · VK ${d.posted.vk === "ok" ? "✓" : "—"}` +
+    (d.posted.telegram_message_id ? `<br>TG msg id: ${d.posted.telegram_message_id}` : "") +
+    (d.posted.vk_post_id ? ` · VK post id: ${d.posted.vk_post_id}` : "");
   el("article-raw").value = d.raw;
   el("article-raw").disabled = false;
   el("save-article-local").disabled = false;
