@@ -387,6 +387,14 @@ section[id], footer[id] { scroll-margin-top: 72px; }
   color: var(--surface);
   border-bottom: 1px solid oklch(100% 0 0 / 0.08);
 }
+.mobile-nav-panel a.nav-quiz-mobile {
+  color: oklch(75% 0.14 240);
+  font-weight: 700;
+  background: oklch(40% 0.08 240 / 0.35);
+  margin: 0 -20px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
 .mobile-nav-panel a:last-child { border-bottom: none; }
 .mobile-nav-phone {
   display: flex;
@@ -519,6 +527,36 @@ section[id], footer[id] { scroll-margin-top: 72px; }
   background: oklch(71% 0.19 78 / 0.18);
   color: var(--accent);
   border-color: oklch(71% 0.19 78 / 0.35);
+}
+a.badge-quiz {
+  text-decoration: none;
+  cursor: pointer;
+  background: oklch(55% 0.12 240 / 0.35);
+  color: oklch(95% 0.04 240);
+  border-color: oklch(75% 0.14 240 / 0.55);
+  transition: background 0.15s, border-color 0.15s;
+}
+a.badge-quiz:hover {
+  background: oklch(55% 0.14 240 / 0.5);
+  border-color: oklch(80% 0.12 240 / 0.7);
+}
+.header-quiz-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 12px;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  white-space: nowrap;
+  text-decoration: none;
+  color: oklch(92% 0.04 240);
+  background: oklch(45% 0.1 240 / 0.55);
+  border: 1px solid oklch(70% 0.12 240 / 0.5);
+  transition: background 0.15s;
+}
+.header-quiz-pill:hover { background: oklch(50% 0.12 240 / 0.7); color: #fff; }
+@media (min-width: 1024px) {
+  .header-quiz-pill { display: none; }
 }
 .hero-cta { display: flex; flex-wrap: wrap; gap: 12px; }
 .hero-quiz-link {
@@ -1250,6 +1288,7 @@ section[id], footer[id] { scroll-margin-top: 72px; }
       </nav>
     </div>
     <div class="header-actions">
+      <a class="header-quiz-pill" href="/quiz/zima-dom/">Тест к зиме</a>
       <a class="header-phone" href="mailto:i.modelirovanie@yandex.ru">
         i.modelirovanie@yandex.ru
         <span>Написать на почту</span>
@@ -1260,13 +1299,13 @@ section[id], footer[id] { scroll-margin-top: 72px; }
     </div>
   </div>
   <nav class="mobile-nav-panel" id="mobile-nav-panel">
+    <a href="/quiz/zima-dom/" class="nav-quiz-mobile">❄️ Тест: дом к зиме (~2 мин)</a>
     <a href="#services">Услуги</a>
     <a href="#process">Как работаем</a>
     <a href="#portfolio">Портфолио</a>
     <a href="#geography">География</a>
     <a href="#faq">FAQ</a>
     <a href="/blog/" class="nav-blog">Блог</a>
-    <a href="/quiz/zima-dom/">Тест: дом к зиме</a>
     <a href="/domovoy/">Домовой</a>
     <a href="tel:+79934660555" class="mobile-nav-phone"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.62 10.79a15.05 15.05 0 0 0 6.59 6.59l2.2-2.2a1 1 0 0 1 1.01-.24c1.12.37 2.33.57 3.58.57a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1C10.4 21 3 13.6 3 4.5a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.46.57 3.58a1 1 0 0 1-.25 1.01l-2.2 2.2Z"/></svg> +7 993 466-05-55</a>
   </nav>
@@ -1281,6 +1320,7 @@ section[id], footer[id] { scroll-margin-top: 72px; }
         <h1 class="h1">Электрика и сантехника <em>под ключ</em> для частного дома</h1>
         <p class="hero-lead">Проектирование и монтаж инженерных сетей ИЖС: частный дом, коттедж, СИП-дом, каркасный дом. Гарантия 1 год, работа по договору, чеки на все материалы.</p>
         <div class="hero-badges">
+          <a href="/quiz/zima-dom/" class="badge badge-quiz">❄️ Тест перед морозами · 2 мин</a>
           <span class="badge badge-accent">3D-визуализация проекта</span>
           <span class="badge">Опыт 10+ лет</span>
           <span class="badge">Гарантия 1 год</span>
@@ -1338,6 +1378,22 @@ section[id], footer[id] { scroll-margin-top: 72px; }
       <div class="stat-item"><div class="stat-num">3</div><div class="stat-label">бригады с мастерами</div></div>
       <div class="stat-item"><div class="stat-num">1 год</div><div class="stat-label">гарантия на работы</div></div>
       <div class="stat-item"><div class="stat-num">±10%</div><div class="stat-label">отклонение от бюджета</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- QUIZ PROMO (сезонный вход на тест) -->
+<div class="quiz-promo-strip" id="quiz-promo">
+  <div class="container quiz-promo-inner">
+    <a href="/quiz/zima-dom/" class="quiz-promo-thumb" aria-hidden="true" tabindex="-1">
+      <img src="assets/covers/quiz-zima-dom-cover.jpg" width="120" height="120" alt="" loading="lazy">
+    </a>
+    <div class="quiz-promo-body">
+      <div class="quiz-promo-text">
+        <strong>Проверьте дом перед морозами</strong>
+        <span>Короткий тест по электрике и сантехнике — что успеть проверить на объекте, без регистрации.</span>
+      </div>
+      <a href="/quiz/zima-dom/" class="btn btn-primary">Пройти тест (~2 мин)</a>
     </div>
   </div>
 </div>
@@ -1469,22 +1525,6 @@ section[id], footer[id] { scroll-margin-top: 72px; }
     </div>
   </div>
 </section>
-
-<!-- QUIZ PROMO (сезонный вход на тест) -->
-<div class="quiz-promo-strip" id="quiz-promo">
-  <div class="container quiz-promo-inner">
-    <a href="/quiz/zima-dom/" class="quiz-promo-thumb" aria-hidden="true" tabindex="-1">
-      <img src="assets/covers/quiz-zima-dom-cover.jpg" width="120" height="120" alt="" loading="lazy">
-    </a>
-    <div class="quiz-promo-body">
-      <div class="quiz-promo-text">
-        <strong>Проверьте дом перед морозами</strong>
-        <span>Короткий тест по электрике и сантехнике — что успеть проверить на объекте, без регистрации.</span>
-      </div>
-      <a href="/quiz/zima-dom/" class="btn btn-primary">Пройти тест (~2 мин)</a>
-    </div>
-  </div>
-</div>
 
 <!-- PORTFOLIO -->
 <section id="portfolio" data-od-id="portfolio">
