@@ -28,5 +28,9 @@
     "telegram": "ok",
     "vk": "ok",
     "social_version": 1
+  },
+  "elektrokotel-chastnyj-dom-moshchnost-vvod": {
+    "telegram_message_id": 33,
+    "telegram": "ok"
   }
 }
