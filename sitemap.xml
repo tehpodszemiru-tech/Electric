@@ -2,13 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://electric.vim-scrum.ru/</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-11-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://electric.vim-scrum.ru/blog/</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-11-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -19,10 +19,10 @@
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://electric.vim-scrum.ru/quiz/zima-dom/</loc>
-    <lastmod>2026-11-02</lastmod>
+    <loc>https://electric.vim-scrum.ru/blog/elektrokotel-chastnyj-dom-moshchnost-vvod/</loc>
+    <lastmod>2026-11-09</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.75</priority>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://electric.vim-scrum.ru/blog/rezervnoe-pitanie-kotla-nasos-ibp-generator/</loc>
