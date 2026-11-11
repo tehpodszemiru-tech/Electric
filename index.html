@@ -1831,13 +1831,17 @@ async function fetchGalleryManifest(url, ms) {
 function mergeGalleryManifests(base, extra) {
   const out = { elektrika: [], proektirovanie: [], santehnika: [] };
   for (const cat of Object.keys(out)) {
-    const seen = new Set();
+    const seenIds = new Set();
+    const seenFiles = new Set();
     for (const src of [base, extra]) {
       if (!src) continue;
       for (const it of src[cat] || []) {
-        const key = (it.id || '') + '|' + (it.file || '');
-        if (seen.has(key)) continue;
-        seen.add(key);
+        const idKey = (it.id || '').trim().toLowerCase();
+        const fileName = (it.file || '').split('/').pop().toLowerCase();
+        if (idKey && seenIds.has(idKey)) continue;
+        if (fileName && seenFiles.has(fileName)) continue;
+        if (idKey) seenIds.add(idKey);
+        if (fileName) seenFiles.add(fileName);
         out[cat].push(it);
       }
     }
@@ -1874,7 +1878,12 @@ function mergeGalleryManifests(base, extra) {
     if (!grid || !items.length) return;
     items.forEach(it => {
       const src = galleryPhotoUrl(it.file);
-      if (src && [...grid.querySelectorAll("img")].some((img) => img.getAttribute("src") === src)) {
+      const fn = (it.file || '').split('/').pop().toLowerCase();
+      if ([...grid.querySelectorAll("img")].some(img => {
+        const s = (img.getAttribute("src") || '').replace(/^\/+/, '').toLowerCase();
+        return (src && s === src.replace(/^\/+/, '').toLowerCase()) ||
+               (fn && s.split('/').pop().toLowerCase() === fn);
+      })) {
         return;
       }
       const div = document.createElement('div');
