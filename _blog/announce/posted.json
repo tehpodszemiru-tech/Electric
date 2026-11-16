@@ -30,7 +30,11 @@
     "social_version": 1
   },
   "elektrokotel-chastnyj-dom-moshchnost-vvod": {
-    "telegram_message_id": 34,
+    "telegram_message_id": 35,
+    "telegram": "ok"
+  },
+  "obogrev-krovli-vodostokov": {
+    "telegram_message_id": 36,
     "telegram": "ok"
   }
 }
