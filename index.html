@@ -1261,6 +1261,8 @@ a.badge-quiz:hover {
   .gallery-grid { grid-template-columns: 1fr; }
 }
 </style>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="assets/calc.css">
 </head>
 <body>
 
@@ -1278,6 +1280,7 @@ a.badge-quiz:hover {
       </a>
       <nav class="header-nav" aria-label="Основное меню">
         <a href="#services">Услуги</a>
+        <a href="#calculator-section" class="nav-quiz">Калькулятор</a>
         <a href="#process" class="nav-secondary">Как работаем</a>
         <a href="#portfolio">Портфолио</a>
         <a href="#geography" class="nav-secondary">География</a>
@@ -1300,6 +1303,7 @@ a.badge-quiz:hover {
   </div>
   <nav class="mobile-nav-panel" id="mobile-nav-panel">
     <a href="/quiz/zima-dom/" class="nav-quiz-mobile">❄️ Тест: дом к зиме (~2 мин)</a>
+    <a href="#calculator-section">3D-калькулятор стоимости</a>
     <a href="#services">Услуги</a>
     <a href="#process">Как работаем</a>
     <a href="#portfolio">Портфолио</a>
@@ -1327,6 +1331,7 @@ a.badge-quiz:hover {
           <span class="badge">По договору</span>
         </div>
         <div class="hero-cta">
+          <a href="#calculator-section" class="btn btn-outline btn-lg">Рассчитать стоимость в 3D ↓</a>
           <a href="#final-cta" class="btn btn-primary btn-lg">Рассчитать стоимость</a>
           <a href="tel:+79934660555" class="btn btn-outline btn-lg">Позвонить</a>
           <a href="/quiz/zima-dom/" class="btn btn-outline btn-lg">Тест: дом к зиме</a>
@@ -1367,6 +1372,423 @@ a.badge-quiz:hover {
         </form>
       </div>
     </div>
+  </div>
+</section>
+
+<!-- 3D-КАЛЬКУЛЯТОР «ДОМОВОЙ» -->
+<section id="calculator-section" data-od-id="calculator">
+  <div class="container">
+    <div class="calc-head">
+      <div class="eyebrow">Софт «Домовой» · Вся Россия</div>
+      <h2 class="h2">Интерактивный расчет инженерных сетей дома в ПО «Домовой»</h2>
+      <p class="calc-lead">Выберите параметры дома: алгоритм построит 3D-трассировку коммуникаций и рассчитает предварительную вилку стоимости</p>
+    </div>
+
+    <div class="calc-topbar">
+      <div class="calc-format-block">
+        <span class="calc-group-label">Формат заказа</span>
+        <div class="calc-format-switch" role="group" aria-label="Формат заказа">
+          <button type="button" class="calc-format-btn" data-calc-format="project" aria-pressed="false">Только проект (вся РФ)</button>
+          <button type="button" class="calc-format-btn is-active" data-calc-format="turnkey" aria-pressed="true">Проект + монтаж под ключ (Самара и обл.)</button>
+        </div>
+      </div>
+
+      <div class="calc-estimate" aria-live="polite">
+        <div class="calc-estimate-top">
+          <span class="calc-label">Ориентировочная стоимость</span>
+          <span class="calc-mode-chip" id="calc-mode-chip">Проект + монтаж (Самара и обл.)</span>
+        </div>
+        <div class="calc-estimate-value" id="calc-range">от 447 000 ₽ до 519 000 ₽</div>
+        <div class="calc-estimate-sub" id="calc-summary">
+          <span>9 × 10 м</span><span>H 2,8 м</span><span>90 м²</span><span>1 этаж</span><span>Каркасный / СИП</span><span>1 с/у</span><span>Материалы + монтаж + 3D-проект</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="calc-workspace">
+      <div class="calc-col calc-col-left">
+      <!-- Параметры объекта -->
+      <section class="calc-panel calc-params" aria-labelledby="calc-params-title">
+        <div class="calc-panel-head">
+          <h3 class="calc-panel-title" id="calc-params-title">Параметры объекта</h3>
+          <span class="calc-badge">Софт «Домовой»</span>
+        </div>
+
+        <div class="calc-group">
+          <span class="calc-group-label">Типовые пресеты</span>
+          <div class="calc-presets">
+            <button type="button" class="calc-preset is-active" data-calc-preset="compact">90 м² · СИП · 1 эт.</button>
+            <button type="button" class="calc-preset" data-calc-preset="family">140 м² · газобетон · 1 эт.</button>
+            <button type="button" class="calc-preset" data-calc-preset="cottage">180 м² · кирпич · 2 эт.</button>
+          </div>
+        </div>
+
+        <div class="calc-group">
+          <label class="calc-group-label" for="calc-width">
+            <span>Ширина дома (X)</span>
+            <span class="calc-group-value" id="calc-width-readout">9 м</span>
+          </label>
+          <div class="calc-slider-row">
+            <input type="range" id="calc-width" min="6" max="16" step="0.5" value="9" aria-label="Ширина дома в метрах">
+            <input type="number" id="calc-width-num" class="calc-num" min="6" max="16" step="0.5" value="9" aria-label="Ширина дома, м">
+          </div>
+        </div>
+
+        <div class="calc-group">
+          <label class="calc-group-label" for="calc-length">
+            <span>Длина дома (Z)</span>
+            <span class="calc-group-value" id="calc-length-readout">10 м</span>
+          </label>
+          <div class="calc-slider-row">
+            <input type="range" id="calc-length" min="6" max="20" step="0.5" value="10" aria-label="Длина дома в метрах">
+            <input type="number" id="calc-length-num" class="calc-num" min="6" max="20" step="0.5" value="10" aria-label="Длина дома, м">
+          </div>
+        </div>
+
+        <div class="calc-group">
+          <label class="calc-group-label" for="calc-height">
+            <span>Высота этажа (Y)</span>
+            <span class="calc-group-value" id="calc-height-readout">2,8 м</span>
+          </label>
+          <div class="calc-slider-row">
+            <input type="range" id="calc-height" min="2.5" max="3.5" step="0.1" value="2.8" aria-label="Высота этажа в метрах">
+            <input type="number" id="calc-height-num" class="calc-num" min="2.5" max="3.5" step="0.1" value="2.8" aria-label="Высота этажа, м">
+          </div>
+        </div>
+
+        <div class="calc-metrics">
+          <span>Площадь: <b id="calc-area-out">90 м²</b></span>
+          <span>Периметр: <b id="calc-perimeter-out">38 м</b></span>
+        </div>
+
+        <div class="calc-group">
+          <span class="calc-group-label">Этажность</span>
+          <div class="calc-seg" role="group" aria-label="Этажность">
+            <button type="button" class="calc-seg-btn is-active" data-calc-floors="1" aria-pressed="true">1 этаж</button>
+            <button type="button" class="calc-seg-btn" data-calc-floors="2" aria-pressed="false">2 этажа</button>
+          </div>
+        </div>
+
+        <div class="calc-group">
+          <span class="calc-group-label">Тип дома</span>
+          <div class="calc-seg" role="group" aria-label="Тип дома">
+            <button type="button" class="calc-seg-btn is-active" data-calc-wall="frame" aria-pressed="true">Каркасный / СИП</button>
+            <button type="button" class="calc-seg-btn" data-calc-wall="block" aria-pressed="false">Газобетон / Блок</button>
+            <button type="button" class="calc-seg-btn" data-calc-wall="brick" aria-pressed="false">Кирпич / Монолит</button>
+          </div>
+        </div>
+
+        <div class="calc-group">
+          <span class="calc-group-label">Санузлы</span>
+          <div class="calc-seg" role="group" aria-label="Количество санузлов">
+            <button type="button" class="calc-seg-btn is-active" data-calc-bath="1" aria-pressed="true">1 с/у</button>
+            <button type="button" class="calc-seg-btn" data-calc-bath="2" aria-pressed="false">2 с/у</button>
+            <button type="button" class="calc-seg-btn" data-calc-bath="3" aria-pressed="false">3+ с/у</button>
+          </div>
+        </div>
+
+        <div class="calc-inline-group" id="calc-heating1-group" data-calc-heating-group>
+          <span class="calc-inline-label">1 этаж</span>
+          <div class="calc-seg calc-seg-inline" role="group" aria-label="Отопление первого этажа">
+            <button type="button" class="calc-seg-btn is-active" data-calc-heating="1:floor" aria-pressed="true">Тёплый пол</button>
+            <button type="button" class="calc-seg-btn" data-calc-heating="1:radiators" aria-pressed="false">Радиаторы</button>
+          </div>
+        </div>
+
+        <div class="calc-inline-group" id="calc-heating2-group" data-calc-heating-group hidden>
+          <span class="calc-inline-label">2 этаж</span>
+          <div class="calc-seg calc-seg-inline" role="group" aria-label="Отопление второго этажа">
+            <button type="button" class="calc-seg-btn is-active" data-calc-heating="2:floor" aria-pressed="true">Тёплый пол</button>
+            <button type="button" class="calc-seg-btn" data-calc-heating="2:radiators" aria-pressed="false">Радиаторы</button>
+          </div>
+        </div>
+
+        <div class="calc-inline-group" id="calc-boiler-group" data-calc-boiler-group>
+          <span class="calc-inline-label">Котёл</span>
+          <div class="calc-seg calc-seg-inline" role="group" aria-label="Тип котла">
+            <button type="button" class="calc-seg-btn is-active" data-calc-boiler="gas" aria-pressed="true">Газ</button>
+            <button type="button" class="calc-seg-btn" data-calc-boiler="electric" aria-pressed="false">Электро</button>
+            <button type="button" class="calc-seg-btn" data-calc-boiler="wood" aria-pressed="false">Дрова</button>
+            <button type="button" class="calc-seg-btn" data-calc-boiler="none" aria-pressed="false">Нет</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Мессенджеры и телефон -->
+      <section class="calc-panel calc-contact" aria-labelledby="calc-contact-title">
+        <div class="calc-panel-head">
+          <h3 class="calc-panel-title" id="calc-contact-title">Связаться с инженером и передать параметры</h3>
+          <span class="calc-badge">РФ · Удаленно и под ключ</span>
+        </div>
+
+        <div class="calc-contact-grid">
+          <button type="button" class="calc-btn calc-btn-messenger tg" data-calc-messenger="tg">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path d="M22 2L11 13"></path>
+              <path d="M22 2L15 22l-4-9-9-4 20-7z"></path>
+            </svg>
+            <span>Написать в TG</span>
+          </button>
+          <button type="button" class="calc-btn calc-btn-messenger max" data-calc-messenger="max">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+            </svg>
+            <span>Написать в MAX</span>
+          </button>
+          <a class="calc-btn calc-btn-phone" href="tel:+79934660555">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"></path>
+            </svg>
+            <span>+7 (993) 466-05-55</span>
+          </a>
+        </div>
+
+        <div class="calc-msg-box" id="calc-msg-box" aria-live="polite">
+          <div class="calc-msg-head">
+            <span class="calc-msg-title" id="calc-msg-title">Текст заявки для TG</span>
+            <span class="calc-msg-status" id="calc-msg-status"></span>
+          </div>
+          <textarea class="calc-msg-text" id="calc-msg-text" readonly aria-label="Сформированный текст заявки с параметрами дома"></textarea>
+          <div class="calc-msg-foot">
+            <span class="calc-form-note">Получатель: +7 (993) 466-05-55 · Софт «Домовой»</span>
+            <button type="button" class="calc-btn calc-btn-ghost" data-calc-copy-msg>Скопировать текст</button>
+          </div>
+        </div>
+
+        <div class="calc-transfer">
+          <div class="calc-transfer-head">
+            <span class="calc-transfer-title">Контур для программы «Домовой»</span>
+            <span class="calc-badge">schemaVersion 1 · мм</span>
+          </div>
+          <p class="calc-transfer-desc">Скачайте файл проекта с габаритами, щитом и базовыми точками — он открывается в «Домовом» через «Открыть».</p>
+          <div class="calc-code-row">
+            <code class="calc-code" id="calc-code">DOM-XXXXX-X</code>
+            <button type="button" class="calc-btn calc-btn-ghost" data-calc-copy-code>Скопировать код</button>
+            <button type="button" class="calc-btn calc-btn-primary" data-calc-download-project>Скачать проект (.json)</button>
+          </div>
+          <p class="calc-transfer-note">Короткий код можно передать инженеру в TG/MAX — по нему он соберёт тот же контур у себя.</p>
+        </div>
+
+        <button type="button" class="calc-btn calc-btn-primary" data-calc-open-form>Открыть спецификацию и сформировать заявку</button>
+      </section>
+
+      </div>
+
+      <div class="calc-col calc-col-right">
+
+      <!-- 3D-визуализатор -->
+      <section class="calc-panel calc-viewport" aria-label="Интерактивная 3D-модель инженерных сетей">
+        <div class="calc-layers">
+          <div class="calc-layers-group" role="group" aria-label="Слои инженерных сетей">
+            <button type="button" class="calc-layer electric is-active" data-calc-system="electric" aria-pressed="true">
+              <span class="calc-dot electric" aria-hidden="true"></span><span>Электрика</span>
+            </button>
+            <button type="button" class="calc-layer heating is-active" data-calc-system="heating" aria-pressed="true">
+              <span class="calc-dot heating" aria-hidden="true"></span><span>Отопление / ТП</span>
+            </button>
+            <button type="button" class="calc-layer water is-active" data-calc-system="water" aria-pressed="true">
+              <span class="calc-dot water" aria-hidden="true"></span><span>Вода / Канализация</span>
+            </button>
+          </div>
+          <button type="button" class="calc-layer xray is-active" data-calc-xray aria-pressed="true">Прозрачные стены</button>
+        </div>
+
+        <div class="calc-stage" id="calc-stage">
+          <canvas id="calc-canvas" aria-label="3D-модель дома с трассами инженерных сетей"></canvas>
+          <div class="calc-stage-loading" id="calc-stage-loading">Загружаем 3D-модель</div>
+          <div class="calc-stage-fallback" id="calc-stage-fallback">3D-сцена временно недоступна. Параметры и расчет работают без неё.</div>
+          <div class="calc-hud calc-hud-top">
+            <div class="calc-chip" id="calc-hud-dim">9 × 10 м · H 2,8 м · 1 этаж · Каркасный / СИП</div>
+            <div class="calc-chip" id="calc-hud-nets">Слои: Электрика · Отопление · Вода</div>
+          </div>
+          <div class="calc-hud calc-hud-bottom">
+            <div class="calc-chip">Вращение: тяните сцену · Масштаб: колесо / щипок</div>
+            <div class="calc-cam">
+              <button type="button" class="calc-cam-btn is-active" data-calc-view="iso">Изометрия</button>
+              <button type="button" class="calc-cam-btn" data-calc-view="top">Сверху</button>
+              <button type="button" class="calc-cam-btn" data-calc-autorotate aria-pressed="false">Авто-облет</button>
+              <button type="button" class="calc-cam-btn" data-calc-zoom="-2.2" aria-label="Приблизить 3D-модель">+</button>
+              <button type="button" class="calc-cam-btn" data-calc-zoom="2.2" aria-label="Отдалить 3D-модель">−</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="calc-telemetry">
+          <div class="calc-tel electric">
+            <span class="calc-tel-label">Электроузел (ВВГнг-LS)</span>
+            <span class="calc-tel-val" id="calc-tel-electric">Щит 24 мод. · 45 точек</span>
+          </div>
+          <div class="calc-tel heating">
+            <span class="calc-tel-label">Отопление</span>
+            <span class="calc-tel-val" id="calc-tel-heating">6 конт. ТП</span>
+          </div>
+          <div class="calc-tel water">
+            <span class="calc-tel-label">Вода и стояки</span>
+            <span class="calc-tel-val" id="calc-tel-water">1 с/у + кухня</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Смета под замком -->
+      <section class="calc-panel calc-spec is-locked" id="calc-spec" aria-labelledby="calc-spec-title">
+        <div class="calc-panel-head">
+          <h3 class="calc-panel-title" id="calc-spec-title">Спецификация узлов и объемов</h3>
+          <span class="calc-badge is-locked" id="calc-spec-badge">Закрыто</span>
+        </div>
+
+        <div class="calc-spec-content">
+          <div class="calc-spec-table">
+            <div class="calc-spec-group">
+              <div class="calc-spec-group-title electric">
+                <span>01 · Электрика</span>
+                <span id="calc-spec-el">0 ₽</span>
+              </div>
+              <div class="calc-spec-row">
+                <span class="calc-spec-row-name">Кабель ВВГнг-LS 3×2.5 (розеточные линии)</span>
+                <span class="calc-spec-row-val" id="calc-cable25">0 м</span>
+              </div>
+              <div class="calc-spec-row">
+                <span class="calc-spec-row-name">Кабель ВВГнг-LS 3×1.5 (освещение)</span>
+                <span class="calc-spec-row-val" id="calc-cable15">0 м</span>
+              </div>
+              <div class="calc-spec-row">
+                <span class="calc-spec-row-name">Щит распределительный (АВ / УЗО / РКН)</span>
+                <span class="calc-spec-row-val" id="calc-shield">0 мод.</span>
+              </div>
+              <div class="calc-spec-row">
+                <span class="calc-spec-row-name">Электроточки (розетки, свет, выводы)</span>
+                <span class="calc-spec-row-val" id="calc-points">0 шт.</span>
+              </div>
+              <div class="calc-spec-row">
+                <span class="calc-spec-row-name">В т.ч. розетки / свет / выключатели</span>
+                <span class="calc-spec-row-val" id="calc-points-breakdown">0 / 0 / 0</span>
+              </div>
+              <p class="calc-spec-note">Розетки — ~1 на 5–6 м², свет — ~1 на 8–9 м², выключатели — по комнатам и мокрым зонам.</p>
+            </div>
+
+            <div class="calc-spec-group">
+              <div class="calc-spec-group-title heating">
+                <span>02 · Отопление</span>
+                <span id="calc-spec-heat">0 ₽</span>
+              </div>
+              <div class="calc-spec-row" id="calc-floorpipe-row">
+                <span class="calc-spec-row-name">Труба теплого пола PEX-a 16×2.0</span>
+                <span class="calc-spec-row-val" id="calc-floorpipe">0 м</span>
+              </div>
+              <div class="calc-spec-row" id="calc-loops-row">
+                <span class="calc-spec-row-name">Коллекторный узел (контуры / петли)</span>
+                <span class="calc-spec-row-val" id="calc-loops">0 конт.</span>
+              </div>
+              <div class="calc-spec-row" id="calc-radiators-row" hidden>
+                <span class="calc-spec-row-name">Радиаторы</span>
+                <span class="calc-spec-row-val" id="calc-radiators">0 шт.</span>
+              </div>
+              <div class="calc-spec-row" id="calc-radpipe-row" hidden>
+                <span class="calc-spec-row-name">Подводка к радиаторам</span>
+                <span class="calc-spec-row-val" id="calc-radpipe">0 м</span>
+              </div>
+              <div class="calc-spec-row" id="calc-boiler-row" hidden>
+                <span class="calc-spec-row-name" id="calc-boiler-name">Котёл и обвязка</span>
+                <span class="calc-spec-row-val" id="calc-boiler-cost">0 ₽</span>
+              </div>
+            </div>
+
+            <div class="calc-spec-group">
+              <div class="calc-spec-group-title water">
+                <span>03 · Водоснабжение и канализация</span>
+                <span id="calc-spec-water">0 ₽</span>
+              </div>
+              <div class="calc-spec-row">
+                <span class="calc-spec-row-name">Трубы ХВС / ГВС и рециркуляции</span>
+                <span class="calc-spec-row-val" id="calc-waterpipe">0 м</span>
+              </div>
+              <div class="calc-spec-row">
+                <span class="calc-spec-row-name">Канализация Ø50 / Ø110 и стояки</span>
+                <span class="calc-spec-row-val" id="calc-sewerpipe">0 м</span>
+              </div>
+            </div>
+
+            <div class="calc-spec-split">
+              <div class="calc-split-tile">
+                <span class="calc-split-label">Материалы (ориентир)</span>
+                <span class="calc-split-val" id="calc-materials">0 ₽</span>
+              </div>
+              <div class="calc-split-tile">
+                <span class="calc-split-label" id="calc-work-label">Монтажные работы</span>
+                <span class="calc-split-val" id="calc-work">0 ₽</span>
+              </div>
+            </div>
+
+            <div class="calc-spec-group">
+              <div class="calc-spec-group-title summary">
+                <span>3D-проект «Домовой» (BIM-схема)</span>
+                <span id="calc-project">0 ₽</span>
+              </div>
+              <div class="calc-spec-row">
+                <span class="calc-spec-row-name">Состав: 3D-трассы, однолинейная схема, ведомость</span>
+                <span class="calc-spec-row-val" id="calc-project-scope">Включен в смету</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="calc-gate" id="calc-gate">
+            <div class="calc-lock-icon" aria-hidden="true">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="4" y="11" width="16" height="10" rx="2"></rect>
+                <path d="M8 11V7a4 4 0 0 1 8 0v4"></path>
+              </svg>
+            </div>
+            <h3 class="calc-gate-title">Поузловая спецификация скрыта</h3>
+            <p class="calc-gate-desc">Точный метраж кабеля ВВГнг-LS, число модулей щита, трубы теплого пола и разбивка на материалы и работы доступны после заявки.</p>
+            <ul class="calc-gate-list">
+              <li>Метраж кабеля и число модулей щита</li>
+              <li>Тёплый пол, радиаторы и подводка</li>
+              <li>Разбивка «материалы / работа»</li>
+              <li>3D-схема и ведомость из «Домового»</li>
+            </ul>
+
+            <form class="calc-lead-form" id="calc-lead-form" novalidate>
+              <div class="calc-field">
+                <label for="calc-name">Ваше имя</label>
+                <input id="calc-name" name="name" type="text" placeholder="Например, Алексей" autocomplete="name">
+              </div>
+              <div class="calc-field">
+                <label for="calc-contact">Телефон, ник в TG/MAX или e-mail</label>
+                <input id="calc-contact" name="phone" type="text" placeholder="+7 (9__) ___-__-__ или @username" autocomplete="tel">
+              </div>
+              <div class="calc-field">
+                <label for="calc-channel">Куда направить схему и ведомость</label>
+                <select id="calc-channel" name="channel">
+                  <option value="Telegram">Telegram (TG)</option>
+                  <option value="MAX">Мессенджер MAX</option>
+                  <option value="Email">Электронная почта</option>
+                </select>
+              </div>
+              <div class="calc-hp" aria-hidden="true">
+                <label>Сайт<input type="text" id="calc-website" name="website" tabindex="-1" autocomplete="off"></label>
+              </div>
+              <div class="calc-turnstile" id="calc-turnstile"></div>
+              <p class="calc-form-error" id="calc-form-error" role="status" aria-live="polite"></p>
+              <button type="submit" class="calc-btn calc-btn-unlock" id="calc-lead-submit">Открыть спецификацию и сформировать заявку</button>
+              <p class="calc-form-note">Нажимая кнопку, вы соглашаетесь с <a href="/privacy-policy.html" target="_blank" rel="noopener">политикой конфиденциальности</a>.</p>
+            </form>
+          </div>
+        </div>
+
+        <div class="calc-unlocked-actions">
+          <span class="calc-unlocked-note" id="calc-unlocked-note">Спецификация открыта</span>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;">
+            <button type="button" class="calc-btn calc-btn-ghost" data-calc-download>Скачать ведомость (.txt)</button>
+            <button type="button" class="calc-btn calc-btn-ghost" data-calc-lock>Скрыть под замок</button>
+          </div>
+        </div>
+      </section>
+
+
+      </div>
+    </div>
+
+    <p class="calc-disclaimer">* Предварительный расчет формируется алгоритмом программы «Домовой» на базе усредненных инженерных норм. Итоговая стоимость определяется после выезда инженера, теплотехнического расчета и согласования ТЗ. Не является публичной офертой.</p>
   </div>
 </section>
 
@@ -1952,7 +2374,7 @@ document.querySelectorAll('.faq-q').forEach(btn => {
 // Отправка заявки на бэкенд (Beget, РФ — соответствие 152-ФЗ по локализации данных)
 const WORKER_ENDPOINT = 'https://leads.vim-scrum.ru/lead';
 
-document.querySelectorAll('form').forEach(form => {
+document.querySelectorAll('form:not(#calc-lead-form)').forEach(form => {
   form.addEventListener('submit', async e => {
     e.preventDefault();
     const btn = form.querySelector('button[type="submit"]');
@@ -2078,5 +2500,6 @@ document.querySelectorAll('form').forEach(form => {
   } catch (e) {}
 })();
 </script>
+<script src="assets/calc.js" defer></script>
 </body>
 </html>
