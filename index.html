@@ -559,17 +559,9 @@ a.badge-quiz:hover {
   .header-quiz-pill { display: none; }
 }
 .hero-cta {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  display: flex;
+  flex-wrap: wrap;
   gap: 12px;
-}
-.hero-cta .btn {
-  white-space: normal;
-  text-align: center;
-  padding: 16px 18px;
-}
-@media (max-width: 640px) {
-  .hero-cta { grid-template-columns: 1fr; }
 }
 .hero-quiz-link {
   margin-top: 14px;
@@ -1292,18 +1284,15 @@ a.badge-quiz:hover {
       </a>
       <nav class="header-nav" aria-label="Основное меню">
         <a href="#services">Услуги</a>
-        <a href="#calculator-section" class="nav-quiz">Калькулятор</a>
         <a href="#process" class="nav-secondary">Как работаем</a>
         <a href="#portfolio">Портфолио</a>
         <a href="#geography" class="nav-secondary">География</a>
         <a href="#faq" class="nav-secondary">FAQ</a>
         <a href="/blog/" class="nav-blog">Блог</a>
-        <a href="/quiz/zima-dom/" class="nav-quiz">Тест к зиме</a>
         <a href="/domovoy/">Домовой</a>
       </nav>
     </div>
     <div class="header-actions">
-      <a class="header-quiz-pill" href="/quiz/zima-dom/">Тест к зиме</a>
       <a class="header-phone" href="mailto:i.modelirovanie@yandex.ru">
         i.modelirovanie@yandex.ru
         <span>Написать на почту</span>
@@ -1314,8 +1303,6 @@ a.badge-quiz:hover {
     </div>
   </div>
   <nav class="mobile-nav-panel" id="mobile-nav-panel">
-    <a href="/quiz/zima-dom/" class="nav-quiz-mobile">❄️ Тест: дом к зиме (~2 мин)</a>
-    <a href="#calculator-section">3D-калькулятор стоимости</a>
     <a href="#services">Услуги</a>
     <a href="#process">Как работаем</a>
     <a href="#portfolio">Портфолио</a>
@@ -1343,12 +1330,9 @@ a.badge-quiz:hover {
           <span class="badge">По договору</span>
         </div>
         <div class="hero-cta">
-          <a href="#final-cta" class="btn btn-primary btn-lg">Рассчитать стоимость</a>
-          <a href="#calculator-section" class="btn btn-outline btn-lg">Рассчитать стоимость в 3D ↓</a>
+          <a href="#calculator-section" class="btn btn-primary btn-lg">Рассчитать стоимость</a>
           <a href="tel:+79934660555" class="btn btn-outline btn-lg">Позвонить</a>
-          <a href="/quiz/zima-dom/" class="btn btn-outline btn-lg">Тест: дом к зиме</a>
         </div>
-        <a class="hero-quiz-link" href="/quiz/zima-dom/">7 вопросов · ~2 мин · электрика и сантехника перед морозами →</a>
       </div>
       <div class="hero-form-card">
         <div class="form-title">Бесплатный расчёт стоимости работ</div>
@@ -2120,8 +2104,8 @@ a.badge-quiz:hover {
 <!-- FINAL CTA -->
 <section id="final-cta" data-od-id="final-cta">
   <div class="container">
-    <h2 class="h2">Рассчитайте стоимость для вашего дома</h2>
-    <p class="lead">Опишите объект — перезвоним, ответим на вопросы и составим смету бесплатно</p>
+    <h2 class="h2">Рассчитаем стоимость для вашего дома</h2>
+    <p class="lead">Опишите объект — перезвоним, ответим на вопросы и составим смету</p>
     <div class="cta-grid">
       <div class="cta-form-card">
         <!--

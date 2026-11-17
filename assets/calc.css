@@ -985,10 +985,6 @@
 .calc-disclaimer b { color: var(--calc-muted); font-weight: 600; }
 
 /* ---------- Адаптив ---------- */
-@media (max-width: 1150px) {
-  .header-nav a[href="#calculator-section"] { display: none; }
-}
-
 @media (max-width: 980px) {
   .calc-topbar { grid-template-columns: minmax(0, 1fr); }
   .calc-estimate { order: -1; }
